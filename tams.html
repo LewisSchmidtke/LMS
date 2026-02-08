@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAMS | Lewis M. Schmitke</title>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #000000;
+            --white: #ffffff;
+            --green: #00E842;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Manrope', sans-serif;
+            background: var(--white);
+            color: var(--black);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: var(--black);
+        }
+
+        .nav-inner {
+            margin: 0 auto;
+            padding: 24px 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 1000;
+            letter-spacing: -0.02em;
+            color: var(--green);
+        }
+
+        .back-button {
+            color: var(--green);
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            transition: opacity 0.3s ease;
+        }
+
+        .back-button:hover {
+            opacity: 0.7;
+        }
+
+        /* Hero */
+        .hero {
+            margin-top: 72px;
+            min-height: 100vh;
+            background: var(--white);
+            color: var(--black);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Background image for hero - ADD YOUR IMAGE PATH HERE */
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('images/tams/tadmos_hero_img.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.3; /* Adjust opacity so text remains readable */
+            z-index: 0;
+        }
+
+        .hero::before {
+            position: absolute;
+            font-size: 35rem;
+            font-weight: 800;
+            color: rgba(0, 232, 66, 0.05);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            line-height: 1;
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 1400px;
+        }
+
+        .project-number {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--green);
+            letter-spacing: 0.2em;
+            margin-bottom: 32px;
+        }
+
+        .project-title {
+            font-size: 8rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            line-height: 0.95;
+            margin-bottom: 48px;
+        }
+
+        .project-subtitle {
+            font-size: 2rem;
+            font-weight: 300;
+            line-height: 1.4;
+            max-width: 1000px;
+            margin: 0 auto 64px;
+        }
+
+        .tech-stack {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .tech-item {
+            padding: 12px 32px;
+            background: transparent;
+            border: 2px solid var(--black);
+            color: var(--black);
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        /* Image Showcase Sections */
+        .viz-section {
+            min-height: 100vh;
+            padding: 120px 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .viz-section.black {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .viz-section.white {
+            background: var(--white);
+            color: var(--black);
+        }
+
+        .viz-content {
+            max-width: 1600px;
+            width: 100%;
+        }
+
+        .viz-number {
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--black);
+            letter-spacing: 0.2em;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+        }
+
+        .viz-title {
+            font-size: 5rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1;
+            margin-bottom: 32px;
+            color: var(--green);
+        }
+
+        .viz-description {
+            font-size: 1.5rem;
+            line-height: 1.8;
+            font-weight: 300;
+            margin-bottom: 64px;
+        }
+
+        /* UPDATED: Adaptive Image Container */
+        .image-container {
+            width: 100%;
+            min-height: 400px;
+            max-height: 1200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--black);
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            position: relative;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        .viz-section.black .image-container {
+            background: linear-gradient(135deg, var(--white) 0%, #e0e0e0 100%);
+            border-color: var(--white);
+        }
+
+        /* UPDATED: Responsive Image Styling */
+        .image-container img {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain; /* Maintains aspect ratio */
+            display: block;
+            margin: 0 auto;
+        }
+
+        .image-placeholder-text {
+            text-align: center;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        /* Intro Section */
+        .intro-section {
+            padding: 120px 80px;
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .intro-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .intro-number {
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--green);
+            letter-spacing: 0.2em;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+        }
+
+        .intro-title {
+            font-size: 5rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1;
+            margin-bottom: 48px;
+        }
+
+        .intro-text {
+            font-size: 1.5rem;
+            line-height: 1.8;
+            font-weight: 300;
+            margin-bottom: 32px;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+            margin-top: 80px;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 40px 20px;
+            border: 2px solid var(--green);
+            background: transparent;
+        }
+
+        .stat-number {
+            font-size: 4rem;
+            font-weight: 800;
+            color: var(--green);
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--white);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: var(--white);
+            padding: 120px 80px;
+            text-align: center;
+        }
+
+        .cta-title {
+            font-size: 4rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 48px;
+            color: var(--black);
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 20px 60px;
+            background: var(--black);
+            color: var(--white);
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            border: 3px solid var(--black);
+        }
+
+        .cta-button:hover {
+            background: var(--white);
+            color: var(--black);
+            border-color: var(--black);
+        }
+        /* BMW M Motorsport hover logo */
+        .bmw-highlight {
+            position: relative;
+            display: inline;
+            cursor: pointer;
+            text-decoration: underline;
+            text-decoration-color: var(--green);
+        }
+
+        .bmw-highlight::before {
+            content: '';
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-10px);
+            width: 200px;
+            height: 200px;
+            background-image: url('images/tams/race_engineer.JPEG');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-radius: 50%;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 10;
+        }
+
+        .bmw-highlight:hover::before {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-20px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .project-title {
+                font-size: 5rem;
+            }
+
+            .viz-title, .intro-title {
+                font-size: 3.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .image-container {
+                min-height: 300px;
+                max-height: 600px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-inner {
+                padding: 20px 40px;
+            }
+
+            .hero {
+                padding: 60px 40px;
+            }
+
+            .hero::before {
+                font-size: 15rem;
+            }
+
+            .project-title {
+                font-size: 3rem;
+            }
+
+            .project-subtitle {
+                font-size: 1.3rem;
+            }
+
+            .viz-section {
+                padding: 80px 40px;
+            }
+
+            .viz-title, .intro-title {
+                font-size: 2.5rem;
+            }
+
+            .viz-description, .intro-text {
+                font-size: 1.2rem;
+            }
+
+            .intro-section, .cta-section {
+                padding: 80px 40px;
+            }
+
+            .cta-title {
+                font-size: 2.5rem;
+            }
+
+            .image-container {
+                min-height: 250px;
+                max-height: 500px;
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero, .viz-section, .intro-section, .cta-section {
+                padding-left: 32px;
+                padding-right: 32px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .image-container {
+                min-height: 200px;
+                max-height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-inner">
+            <div class="logo">Lewis M. Schmitke</div>
+            <a href="index.html" class="back-button">← Back</a>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <div class="hero-content">
+            <div class="project-number">PROJECT 02</div>
+            <h1 class="project-title">TAMS</h1>
+            <p class="project-subtitle">
+                Telemetry Analysis for Motorsport Sessions: Advanced visualizations and calculations
+                for performance analysis across Formula 1, WEC, and IMSA.
+                <br>
+                I have since joined <span class="bmw-highlight">BMW M Motorsport</span> as a data/performance engineering intern. In this role I worked on
+                competitor analysis and performance tracking, thus halting the active development of TAMS.
+            </p>
+        </div>
+    </div>
+
+    <section class="intro-section">
+        <div class="intro-content">
+            <div class="intro-number">Overview</div>
+            <h2 class="intro-title">DATA WINS RACES</h2>
+            <p class="intro-text">
+                Modern race cars generate millions of data points per session across hundreds of sensors.
+                TAMS transforms this data into actionable insights for race engineers and strategists. Leveraging
+                historical data to analyze trends and analyzing session-to-session developments for maximum performance.
+            </p>
+            <p class="intro-text">
+                Data Source: Alkamel Systems (WEC & IMSA) | OpenF1 API (Formula 1)
+            </p>
+
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Race Series</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">1mil+</div>
+                    <div class="stat-label">Data Points</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">100+</div>
+                    <div class="stat-label">Races</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">5+</div>
+                    <div class="stat-label">Years of Data</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visualization 1: Driver Head-to-Head -->
+    <section class="viz-section white">
+        <div class="viz-content">
+            <div class="viz-number">Visualization 01</div>
+            <h2 class="viz-title">Driver Head-to-Head <br>Telemetry Analysis</h2>
+            <p class="viz-description">
+                Comparison of the two fastest laps set by two drivers during a session. Important for finding setup
+                differences and find hidden potentials.
+            </p>
+            <div class="image-container">
+                <img src="images/tams/qualifying_head_to_head.png" alt="Race Strategy Analysis">
+            </div>
+        </div>
+    </section>
+
+    <!-- Visualization 2: Race Strategy -->
+    <section class="viz-section black">
+        <div class="viz-content">
+            <div class="viz-number">Visualization 02</div>
+            <h2 class="viz-title">Race Strategy<br>Analysis</h2>
+            <p class="viz-description">
+                Looking at Nico Hulkenberg's first Formula 1 podium in Silverstone 2025 to understand how good race
+                strategy and pace can lead to incredible outcomes.
+            </p>
+            <div class="image-container">
+                <img src="images/tams/hulkenberg_race_strategy.png" alt="Race Strategy Analysis">
+            </div>
+        </div>
+    </section>
+
+    <!-- Visualization 3: Delta Analysis-->
+    <section class="viz-section white">
+        <div class="viz-content">
+            <div class="viz-number">Visualization 03</div>
+            <h2 class="viz-title">Delta Analysis</h2>
+            <p class="viz-description">
+                Direct on-track time difference across a single stint of both drivers. Analyzing absolute pace and
+                pace consistency.
+            </p>
+            <div class="image-container">
+                <img src="images/tams/delta_analysis.png" alt="Race Strategy Analysis">
+            </div>
+        </div>
+    </section>
+
+    <!-- Visualization 4: Cross-Over point -->
+    <section class="viz-section black">
+        <div class="viz-content">
+            <div class="viz-number">Visualization 04</div>
+            <h2 class="viz-title">Cross-Over point <br> Analysis</h2>
+            <p class="viz-description">
+                Important analysis during rainy to dry track evolution to find the optimal lap to pit onto slick tires.
+            </p>
+            <div class="image-container">
+                <img src="images/tams/spa_francorchamps_strategy_ham_oco_alb.png" alt="Race Strategy Analysis">
+            </div>
+        </div>
+    </section>
+
+<!--    &lt;!&ndash; Visualization 5: Track Map &ndash;&gt;-->
+<!--    <section class="viz-section white">-->
+<!--        <div class="viz-content">-->
+<!--            <div class="viz-number">Visualization 05</div>-->
+<!--            <h2 class="viz-title">Stint Tire Speed <br> Analysis</h2>-->
+<!--            <p class="viz-description">-->
+<!--                Comparison of the fastest laps for each driver in a single session regarding their selected tire.-->
+<!--            </p>-->
+<!--            <div class="image-container">-->
+<!--                <img src="images/tams/tire_time_rel.png" alt="Race Strategy Analysis">-->
+<!--            </div>-->
+<!--        </div>-->
+    </section>
+</body>
+</html>
