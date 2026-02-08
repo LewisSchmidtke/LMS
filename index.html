@@ -60,10 +60,10 @@
         }
 
         .logo {
-            font-size: 1.1rem;
-            font-weight: 700;
+            font-size: 1.3rem;
+            font-weight: 1000;
             letter-spacing: -0.02em;
-            color: var(--white);
+            color: var(--green);
         }
 
         .nav-links {
@@ -268,6 +268,14 @@
         }
 
         .project-number-display {
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .project-number-display {
             font-size: 28rem;
             font-weight: 800;
             letter-spacing: -0.05em;
@@ -275,11 +283,14 @@
             color: var(--black);
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
         }
 
         .project-number-display:hover {
             font-weight: 800;
-            transform: scale(0.8);
+            transform: scale(1.1);
         }
 
         /* Single color overlay for all projects (stays fixed, mask rotates) */
@@ -640,7 +651,7 @@
             justify-content: center;
             gap: 1em;
             width: max-content;
-            animation: scroll-carousel 30s infinite linear;
+            animation: scroll-carousel 15s infinite linear;
         }
 
         @keyframes scroll-carousel {
@@ -649,7 +660,7 @@
         }
 
         .company-logo {
-            flex: 0 0 5em;
+            flex: 0 0 180px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -677,6 +688,13 @@
 
         .company-logo:hover span {
             color: var(--black);
+        }
+
+        /* Company logo images */
+        .company-logo img {
+            max-height: 50px;
+            max-width: 120px;
+            object-fit: contain;
         }
 
         /* ============================================
@@ -1130,9 +1148,9 @@
         }
 
         .cta-email {
-            font-size: 4rem;
-            font-weight: 300;
-            color: var(--black);
+            font-size: 5rem;
+            font-weight: 1000;
+            color: var(--green);
             text-decoration: none;
             letter-spacing: -0.03em;
             transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -1283,33 +1301,1191 @@
            RESPONSIVE
            ============================================ */
 
-        @media (max-width: 1024px) {
-            .hero-page, .nav-inner { padding-left: 40px; padding-right: 40px; }
-            h1 { font-size: 4rem; }
-            .project-number-display { font-size: 18rem; }
-            .project-title-overlay { left: 40px; }
-            .project-title-text { font-size: 3rem; max-width: 500px; }
-            .project-description { right: 40px; font-size: 0.9rem; max-width: 350px; }
-            .construction-title { font-size: 3rem; }
-            .construction-text-container { padding: 40px 60px; }
+       /* ============================================
+           RESPONSIVE - VARIABLE-BASED SCALING
+           Base: 2560px = scale factor 1.0
+           ============================================ */
+
+        /* MacBook Pro 16" - 1728px */
+        @media (max-width: 1728px) {
+            :root {
+                --scale: 0.8;
+            }
+
+            /* Navigation */
+            .nav-inner {
+                padding: calc(24px * var(--scale)) calc(80px * var(--scale));
+            }
+
+            .logo {
+                font-size: calc(1.3rem * var(--scale));
+            }
+
+            .nav-links {
+                gap: calc(48px * var(--scale));
+                font-size: calc(1rem * var(--scale));
+                transform: translateX(calc(-30px * var(--scale)));
+            }
+
+            .nav-links a::after {
+                bottom: calc(-4px * var(--scale));
+                height: calc(2px * var(--scale));
+            }
+
+            /* Hero Page */
+            .hero-page {
+                padding: calc(20px * var(--scale)) calc(80px * var(--scale)) calc(80px * var(--scale));
+            }
+
+            .profile-picture {
+                width: calc(200px * var(--scale));
+                height: calc(200px * var(--scale));
+                margin-bottom: calc(28px * var(--scale));
+                border: calc(3px * var(--scale)) solid var(--grey-200);
+            }
+
+            h1 {
+                font-size: calc(6.5rem * var(--scale));
+                margin-bottom: calc(48px * var(--scale));
+            }
+
+            .hero-number {
+                font-size: calc(0.75rem * var(--scale));
+                margin-bottom: calc(32px * var(--scale));
+            }
+
+            .hero-description {
+                font-size: calc(1.5rem * var(--scale));
+                max-width: calc(1000px * var(--scale));
+            }
+
+            /* Company Carousel */
+            .company-carousel-container {
+                height: calc(80px * var(--scale));
+                margin-bottom: calc(100px * var(--scale));
+            }
+
+            .company-logo {
+                flex: 0 0 calc(180px * var(--scale));
+                padding: 0 calc(60px * var(--scale));
+                height: calc(80px * var(--scale));
+            }
+
+            .company-logo span {
+                font-size: calc(1.3rem * var(--scale));
+            }
+
+            .company-logo img {
+                max-height: calc(50px * var(--scale));
+                max-width: calc(120px * var(--scale));
+            }
+
+            /* Tech Stack */
+            .tech-stack-wrapper {
+                margin-bottom: calc(48px * var(--scale));
+            }
+
+            .tech-stack {
+                height: calc(42px * var(--scale));
+            }
+
+            .tech-icon {
+                width: calc(42px * var(--scale));
+                height: calc(42px * var(--scale));
+            }
+
+            .tech-icon svg {
+                width: calc(20px * var(--scale));
+                height: calc(20px * var(--scale));
+            }
+
+            .tech-icon img {
+                width: calc(24px * var(--scale));
+                height: calc(24px * var(--scale));
+            }
+
+            .tech-icon::after {
+                bottom: calc(-28px * var(--scale));
+                font-size: calc(0.7rem * var(--scale));
+            }
+
+            /* Scroll Explore */
+            .scroll-explore {
+                gap: calc(12px * var(--scale));
+                bottom: calc(10rem * var(--scale));
+            }
+
+            .scroll-text {
+                font-size: calc(0.65rem * var(--scale));
+            }
+
+            .wave-blobs-container {
+                gap: calc(8px * var(--scale));
+                height: calc(50px * var(--scale));
+            }
+
+            .morphing-blob {
+                width: calc(15px * var(--scale));
+                height: calc(15px * var(--scale));
+            }
+
+            @keyframes wave-morph {
+                0%, 100% {
+                    transform: translateY(0) scale(1);
+                    border-radius: 50% 50% 50% 50%;
+                }
+                25% {
+                    transform: translateY(calc(-30px * var(--scale))) scale(1.1);
+                    border-radius: 40% 60% 70% 30%;
+                }
+                50% {
+                    transform: translateY(calc(-35px * var(--scale))) scale(0.9);
+                    border-radius: 70% 30% 40% 60%;
+                }
+                75% {
+                    transform: translateY(calc(-30px * var(--scale))) scale(1.05);
+                    border-radius: 30% 70% 60% 40%;
+                }
+            }
+
+            /* Projects */
+            .project-number-display {
+                font-size: calc(28rem * var(--scale));
+            }
+
+            .project-title-overlay {
+                top: calc(80px * var(--scale));
+                left: calc(80px * var(--scale));
+            }
+
+            .project-description {
+                top: calc(80px * var(--scale));
+                right: calc(80px * var(--scale));
+                font-size: calc(1.35rem * var(--scale));
+                max-width: calc(600px * var(--scale));
+            }
+
+            .project-title-text {
+                font-size: calc(4.5rem * var(--scale));
+                max-width: calc(700px * var(--scale));
+                margin-bottom: calc(20px * var(--scale));
+            }
+
+            .project-badge {
+                padding: calc(10px * var(--scale)) calc(24px * var(--scale));
+                font-size: calc(0.75rem * var(--scale));
+            }
+
+            /* Construction Banner */
+            .construction-banner {
+                height: calc(20vh * var(--scale));
+            }
+
+            .construction-text-container {
+                padding: calc(60px * var(--scale)) calc(80px * var(--scale));
+                border-radius: calc(20px * var(--scale));
+                border: calc(4px * var(--scale)) solid var(--construction-yellow);
+            }
+
+            .construction-title {
+                font-size: calc(4rem * var(--scale));
+                margin-bottom: calc(20px * var(--scale));
+            }
+
+            .construction-subtitle {
+                font-size: calc(1.2rem * var(--scale));
+                margin-bottom: calc(30px * var(--scale));
+            }
+
+            .construction-dismiss {
+                font-size: calc(0.9rem * var(--scale));
+                padding: calc(12px * var(--scale)) calc(32px * var(--scale));
+                border: calc(2px * var(--scale)) solid var(--construction-yellow);
+            }
+
+            /* Experience Section */
+            .experience-heading {
+                font-size: calc(8rem * var(--scale));
+                margin-bottom: calc(80px * var(--scale));
+            }
+
+            .category-toggle {
+                padding: calc(4px * var(--scale));
+                margin-bottom: calc(60px * var(--scale));
+            }
+
+            .category-btn {
+                padding: calc(12px * var(--scale)) calc(32px * var(--scale));
+                font-size: calc(0.85rem * var(--scale));
+            }
+
+            .carousel-wrapper {
+                height: calc(550px * var(--scale));
+            }
+
+            .experience-card {
+                width: calc(320px * var(--scale));
+                height: calc(480px * var(--scale));
+                border-radius: calc(32px * var(--scale));
+            }
+
+            .card-image {
+                height: calc(280px * var(--scale));
+            }
+
+            .card-content {
+                padding: calc(24px * var(--scale));
+            }
+
+            .card-date {
+                font-size: calc(0.75rem * var(--scale));
+                margin-bottom: calc(12px * var(--scale));
+            }
+
+            .card-title {
+                font-size: calc(1.4rem * var(--scale));
+                margin-bottom: calc(8px * var(--scale));
+            }
+
+            .card-company {
+                font-size: calc(1rem * var(--scale));
+                margin-bottom: calc(16px * var(--scale));
+            }
+
+            .card-description {
+                font-size: calc(0.85rem * var(--scale));
+            }
+
+            .carousel-indicators {
+                margin-top: calc(40px * var(--scale));
+                gap: calc(12px * var(--scale));
+            }
+
+            .carousel-indicator-dot {
+                width: calc(10px * var(--scale));
+                height: calc(10px * var(--scale));
+            }
+
+            /* Expanded Card */
+            .expanded-card {
+                width: calc(320px * var(--scale));
+                height: calc(480px * var(--scale));
+                border-radius: calc(32px * var(--scale));
+            }
+
+            .expanded-card.morphing {
+                width: calc(680px * var(--scale));
+                height: calc(560px * var(--scale));
+                border-radius: calc(24px * var(--scale));
+            }
+
+            .expanded-close {
+                top: calc(16px * var(--scale));
+                right: calc(16px * var(--scale));
+                width: calc(40px * var(--scale));
+                height: calc(40px * var(--scale));
+            }
+
+            .expanded-image-wrap {
+                height: calc(200px * var(--scale));
+            }
+
+            .expanded-content {
+                padding: calc(32px * var(--scale));
+            }
+
+            .expanded-date {
+                font-size: calc(0.75rem * var(--scale));
+                margin-bottom: calc(12px * var(--scale));
+            }
+
+            .expanded-title {
+                font-size: calc(1.8rem * var(--scale));
+                margin-bottom: calc(8px * var(--scale));
+            }
+
+            .expanded-company {
+                font-size: calc(1.1rem * var(--scale));
+                margin-bottom: calc(12px * var(--scale));
+            }
+
+            .expanded-description {
+                font-size: calc(0.95rem * var(--scale));
+                margin-bottom: calc(24px * var(--scale));
+            }
+
+            .details-heading {
+                font-size: calc(0.8rem * var(--scale));
+                margin-bottom: calc(12px * var(--scale));
+                margin-top: calc(8px * var(--scale));
+            }
+
+            .details-list {
+                margin-bottom: calc(20px * var(--scale));
+            }
+
+            .details-list li {
+                font-size: calc(0.9rem * var(--scale));
+                padding-left: calc(16px * var(--scale));
+            }
+
+            .details-list li::before {
+                width: calc(6px * var(--scale));
+                height: calc(6px * var(--scale));
+            }
+
+            .details-tags {
+                gap: calc(8px * var(--scale));
+            }
+
+            .detail-tag {
+                padding: calc(6px * var(--scale)) calc(14px * var(--scale));
+                font-size: calc(0.78rem * var(--scale));
+            }
+
+            /* Footer */
+            .cta-text {
+                font-size: calc(1.25rem * var(--scale));
+                margin-bottom: calc(40px * var(--scale));
+            }
+
+            .cta-email {
+                font-size: calc(5rem * var(--scale));
+            }
+
+            /* Section Indicator */
+            .section-indicator {
+                bottom: calc(100px * var(--scale));
+                gap: calc(24px * var(--scale));
+            }
+
+            .indicator-item {
+                width: calc(60px * var(--scale));
+                height: calc(4px * var(--scale));
+            }
+
+            .indicator-pill {
+                height: calc(4px * var(--scale));
+                border-radius: calc(2px * var(--scale));
+            }
+
+            .indicator-number {
+                font-size: calc(2.5rem * var(--scale));
+                bottom: calc(15px * var(--scale));
+            }
+
+            /* Contact Dropup */
+            .contact-dropup {
+                bottom: calc(5rem * var(--scale));
+                right: calc(2.7rem * var(--scale));
+                min-width: calc(200px * var(--scale));
+                border-radius: calc(12px * var(--scale));
+                padding: calc(12px * var(--scale));
+            }
+
+            .contact-dropup-item {
+                gap: calc(12px * var(--scale));
+                padding: calc(14px * var(--scale)) calc(20px * var(--scale));
+                font-size: calc(0.95rem * var(--scale));
+                border-radius: calc(8px * var(--scale));
+            }
+
+            .contact-dropup-item:hover {
+                transform: translateX(calc(-4px * var(--scale)));
+            }
+
+            .contact-dropup-icon {
+                width: calc(20px * var(--scale));
+                height: calc(20px * var(--scale));
+            }
         }
 
-        @media (max-width: 768px) {
-            .nav-links { gap: 24px; }
-            .project-number-display { font-size: 12rem; }
-            .project-title-overlay { left: 24px; top: 60px; }
-            .project-title-text { font-size: 2rem; max-width: 300px; }
-            .project-description { right: 24px; top: 60px; font-size: 0.85rem; max-width: 250px; }
-            .cta-email { font-size: 2rem; }
+        /* Standard Laptop - 1440px */
+        @media (max-width: 1440px) {
+            :root {
+                --scale: 0.7;
+            }
 
-            .experience-card { width: 260px; height: 420px; }
-            .card-image { height: 220px; }
+            /* Navigation */
+            .nav-inner {
+                padding: calc(24px * var(--scale)) calc(80px * var(--scale));
+            }
 
-            .cursor, .cursor-dot { display: none; }
+            .logo {
+                font-size: calc(1.3rem * var(--scale));
+            }
 
-            .construction-title { font-size: 2rem; }
-            .construction-text-container { padding: 30px 40px; }
-            .construction-subtitle { font-size: 1rem; }
+            .nav-links {
+                gap: calc(48px * var(--scale));
+                font-size: calc(1rem * var(--scale));
+                transform: translateX(calc(-30px * var(--scale)));
+            }
+
+            .nav-links a::after {
+                bottom: calc(-4px * var(--scale));
+                height: calc(2px * var(--scale));
+            }
+
+            /* Hero Page */
+            .hero-page {
+                padding: calc(20px * var(--scale)) calc(80px * var(--scale)) calc(80px * var(--scale));
+            }
+
+            .profile-picture {
+                width: calc(200px * var(--scale));
+                height: calc(200px * var(--scale));
+                margin-bottom: calc(28px * var(--scale));
+                border: calc(3px * var(--scale)) solid var(--grey-200);
+            }
+
+            h1 {
+                font-size: calc(6.5rem * var(--scale));
+                margin-bottom: calc(48px * var(--scale));
+            }
+
+            .hero-number {
+                font-size: calc(0.75rem * var(--scale));
+                margin-bottom: calc(32px * var(--scale));
+            }
+
+            .hero-description {
+                font-size: calc(1.3rem * var(--scale));
+                max-width: calc(1000px * var(--scale));
+            }
+
+            /* Company Carousel */
+            .company-carousel-container {
+                height: calc(80px * var(--scale));
+                margin-bottom: calc(100px * var(--scale));
+            }
+
+            .company-logo {
+                flex: 0 0 calc(180px * var(--scale));
+                padding: 0 calc(60px * var(--scale));
+                height: calc(80px * var(--scale));
+            }
+
+            .company-logo span {
+                font-size: calc(1.3rem * var(--scale));
+            }
+
+            .company-logo img {
+                max-height: calc(50px * var(--scale));
+                max-width: calc(120px * var(--scale));
+            }
+
+            /* Tech Stack */
+            .tech-stack-wrapper {
+                margin-bottom: calc(48px * var(--scale));
+            }
+
+            .tech-stack {
+                height: calc(42px * var(--scale));
+            }
+
+            .tech-icon {
+                width: calc(42px * var(--scale));
+                height: calc(42px * var(--scale));
+            }
+
+            .tech-icon svg {
+                width: calc(20px * var(--scale));
+                height: calc(20px * var(--scale));
+            }
+
+            .tech-icon img {
+                width: calc(24px * var(--scale));
+                height: calc(24px * var(--scale));
+            }
+
+            .tech-icon::after {
+                bottom: calc(-28px * var(--scale));
+                font-size: calc(0.7rem * var(--scale));
+            }
+
+            /* Scroll Explore */
+            .scroll-explore {
+                gap: calc(12px * var(--scale));
+                bottom: calc(10rem * var(--scale));
+            }
+
+            .scroll-text {
+                font-size: calc(0.65rem * var(--scale));
+            }
+
+            .wave-blobs-container {
+                gap: calc(8px * var(--scale));
+                height: calc(50px * var(--scale));
+            }
+
+            .morphing-blob {
+                width: calc(15px * var(--scale));
+                height: calc(15px * var(--scale));
+            }
+
+            @keyframes wave-morph {
+                0%, 100% {
+                    transform: translateY(0) scale(1);
+                    border-radius: 50% 50% 50% 50%;
+                }
+                25% {
+                    transform: translateY(calc(-30px * var(--scale))) scale(1.1);
+                    border-radius: 40% 60% 70% 30%;
+                }
+                50% {
+                    transform: translateY(calc(-35px * var(--scale))) scale(0.9);
+                    border-radius: 70% 30% 40% 60%;
+                }
+                75% {
+                    transform: translateY(calc(-30px * var(--scale))) scale(1.05);
+                    border-radius: 30% 70% 60% 40%;
+                }
+            }
+
+            /* Projects */
+            .project-number-display {
+                font-size: calc(28rem * var(--scale));
+            }
+
+            .project-title-overlay {
+                top: calc(80px * var(--scale));
+                left: calc(80px * var(--scale));
+            }
+
+            .project-description {
+                top: calc(80px * var(--scale));
+                right: calc(80px * var(--scale));
+                font-size: calc(1.35rem * var(--scale));
+                max-width: calc(600px * var(--scale));
+            }
+
+            .project-title-text {
+                font-size: calc(4.5rem * var(--scale));
+                max-width: calc(700px * var(--scale));
+                margin-bottom: calc(20px * var(--scale));
+            }
+
+            .project-badge {
+                padding: calc(10px * var(--scale)) calc(24px * var(--scale));
+                font-size: calc(0.75rem * var(--scale));
+            }
+
+            /* Construction Banner */
+            .construction-banner {
+                height: calc(20vh * var(--scale));
+            }
+
+            .construction-text-container {
+                padding: calc(60px * var(--scale)) calc(80px * var(--scale));
+                border-radius: calc(20px * var(--scale));
+                border: calc(4px * var(--scale)) solid var(--construction-yellow);
+            }
+
+            .construction-title {
+                font-size: calc(2rem * var(--scale));
+                margin-bottom: calc(20px * var(--scale));
+            }
+
+            .construction-subtitle {
+                font-size: calc(1.2rem * var(--scale));
+                margin-bottom: calc(30px * var(--scale));
+            }
+
+            .construction-dismiss {
+                font-size: calc(0.9rem * var(--scale));
+                padding: calc(12px * var(--scale)) calc(32px * var(--scale));
+                border: calc(2px * var(--scale)) solid var(--construction-yellow);
+            }
+
+            /* Experience Section */
+            .experience-heading {
+                font-size: calc(8rem * var(--scale));
+                margin-bottom: calc(80px * var(--scale));
+            }
+
+            .category-toggle {
+                padding: calc(4px * var(--scale));
+                margin-bottom: calc(60px * var(--scale));
+            }
+
+            .category-btn {
+                padding: calc(12px * var(--scale)) calc(32px * var(--scale));
+                font-size: calc(0.85rem * var(--scale));
+            }
+
+            .carousel-wrapper {
+                height: calc(550px * var(--scale));
+            }
+
+            .experience-card {
+                width: calc(320px * var(--scale));
+                height: calc(480px * var(--scale));
+                border-radius: calc(32px * var(--scale));
+            }
+
+            .card-image {
+                height: calc(280px * var(--scale));
+            }
+
+            .card-content {
+                padding: calc(24px * var(--scale));
+            }
+
+            .card-date {
+                font-size: calc(0.75rem * var(--scale));
+                margin-bottom: calc(12px * var(--scale));
+            }
+
+            .card-title {
+                font-size: calc(1.4rem * var(--scale));
+                margin-bottom: calc(8px * var(--scale));
+            }
+
+            .card-company {
+                font-size: calc(1rem * var(--scale));
+                margin-bottom: calc(16px * var(--scale));
+            }
+
+            .card-description {
+                font-size: calc(0.85rem * var(--scale));
+            }
+
+            .carousel-indicators {
+                margin-top: calc(40px * var(--scale));
+                gap: calc(12px * var(--scale));
+            }
+
+            .carousel-indicator-dot {
+                width: calc(10px * var(--scale));
+                height: calc(10px * var(--scale));
+            }
+
+            /* Expanded Card */
+            .expanded-card {
+                width: calc(320px * var(--scale));
+                height: calc(480px * var(--scale));
+                border-radius: calc(32px * var(--scale));
+            }
+
+            .expanded-card.morphing {
+                width: calc(680px * var(--scale));
+                height: calc(560px * var(--scale));
+                border-radius: calc(24px * var(--scale));
+            }
+
+            .expanded-close {
+                top: calc(16px * var(--scale));
+                right: calc(16px * var(--scale));
+                width: calc(40px * var(--scale));
+                height: calc(40px * var(--scale));
+            }
+
+            .expanded-image-wrap {
+                height: calc(200px * var(--scale));
+            }
+
+            .expanded-content {
+                padding: calc(32px * var(--scale));
+            }
+
+            .expanded-date {
+                font-size: calc(0.75rem * var(--scale));
+                margin-bottom: calc(12px * var(--scale));
+            }
+
+            .expanded-title {
+                font-size: calc(1.8rem * var(--scale));
+                margin-bottom: calc(8px * var(--scale));
+            }
+
+            .expanded-company {
+                font-size: calc(1.1rem * var(--scale));
+                margin-bottom: calc(12px * var(--scale));
+            }
+
+            .expanded-description {
+                font-size: calc(0.95rem * var(--scale));
+                margin-bottom: calc(24px * var(--scale));
+            }
+
+            .details-heading {
+                font-size: calc(0.8rem * var(--scale));
+                margin-bottom: calc(12px * var(--scale));
+                margin-top: calc(8px * var(--scale));
+            }
+
+            .details-list {
+                margin-bottom: calc(20px * var(--scale));
+            }
+
+            .details-list li {
+                font-size: calc(0.9rem * var(--scale));
+                padding-left: calc(16px * var(--scale));
+            }
+
+            .details-list li::before {
+                width: calc(6px * var(--scale));
+                height: calc(6px * var(--scale));
+            }
+
+            .details-tags {
+                gap: calc(8px * var(--scale));
+            }
+
+            .detail-tag {
+                padding: calc(6px * var(--scale)) calc(14px * var(--scale));
+                font-size: calc(0.78rem * var(--scale));
+            }
+
+            /* Footer */
+            .cta-text {
+                font-size: calc(1.25rem * var(--scale));
+                margin-bottom: calc(40px * var(--scale));
+            }
+
+            .cta-email {
+                font-size: calc(5rem * var(--scale));
+            }
+
+            /* Section Indicator */
+            .section-indicator {
+                bottom: calc(100px * var(--scale));
+                gap: calc(24px * var(--scale));
+            }
+
+            .indicator-item {
+                width: calc(60px * var(--scale));
+                height: calc(4px * var(--scale));
+            }
+
+            .indicator-pill {
+                height: calc(4px * var(--scale));
+                border-radius: calc(2px * var(--scale));
+            }
+
+            .indicator-number {
+                font-size: calc(2.5rem * var(--scale));
+                bottom: calc(15px * var(--scale));
+            }
+
+            /* Contact Dropup */
+            .contact-dropup {
+                bottom: calc(5rem * var(--scale));
+                right: calc(2.7rem * var(--scale));
+                min-width: calc(200px * var(--scale));
+                border-radius: calc(12px * var(--scale));
+                padding: calc(12px * var(--scale));
+            }
+
+            .contact-dropup-item {
+                gap: calc(12px * var(--scale));
+                padding: calc(14px * var(--scale)) calc(20px * var(--scale));
+                font-size: calc(0.95rem * var(--scale));
+                border-radius: calc(8px * var(--scale));
+            }
+
+            .contact-dropup-item:hover {
+                transform: translateX(calc(-4px * var(--scale)));
+            }
+
+            .contact-dropup-icon {
+                width: calc(20px * var(--scale));
+                height: calc(20px * var(--scale));
+            }
+        }
+
+        /* Tablet Landscape - 1024px */
+        @media (max-width: 1024px) {
+            :root {
+                --scale: 0.4; /* 1024 / 2560 = 0.4 */
+            }
+
+            /* Navigation */
+            .nav-inner {
+                padding: calc(24px * var(--scale)) calc(80px * var(--scale));
+            }
+
+            .logo {
+                font-size: calc(1.3rem * var(--scale));
+            }
+
+            .nav-links {
+                gap: calc(48px * var(--scale));
+                font-size: calc(1rem * var(--scale));
+                transform: translateX(calc(-30px * var(--scale)));
+            }
+
+            .nav-links a::after {
+                bottom: calc(-4px * var(--scale));
+                height: calc(2px * var(--scale));
+            }
+
+            /* Hero Page */
+            .hero-page {
+                padding: calc(20px * var(--scale)) calc(80px * var(--scale)) calc(80px * var(--scale));
+            }
+
+            .profile-picture {
+                width: calc(200px * var(--scale));
+                height: calc(200px * var(--scale));
+                margin-bottom: calc(28px * var(--scale));
+                border: calc(3px * var(--scale)) solid var(--grey-200);
+            }
+
+            h1 {
+                font-size: calc(6.5rem * var(--scale));
+                margin-bottom: calc(48px * var(--scale));
+            }
+
+            .hero-number {
+                font-size: calc(0.75rem * var(--scale));
+                margin-bottom: calc(32px * var(--scale));
+            }
+
+            .hero-description {
+                font-size: calc(1.25rem * var(--scale));
+                max-width: calc(1000px * var(--scale));
+            }
+
+            /* Company Carousel */
+            .company-carousel-container {
+                height: calc(80px * var(--scale));
+                margin-bottom: calc(100px * var(--scale));
+            }
+
+            .company-logo {
+                flex: 0 0 calc(180px * var(--scale));
+                padding: 0 calc(60px * var(--scale));
+                height: calc(80px * var(--scale));
+            }
+
+            .company-logo span {
+                font-size: calc(1.3rem * var(--scale));
+            }
+
+            .company-logo img {
+                max-height: calc(50px * var(--scale));
+                max-width: calc(120px * var(--scale));
+            }
+
+            /* Tech Stack */
+            .tech-stack-wrapper {
+                margin-bottom: calc(48px * var(--scale));
+            }
+
+            .tech-stack {
+                height: calc(42px * var(--scale));
+            }
+
+            .tech-icon {
+                width: calc(42px * var(--scale));
+                height: calc(42px * var(--scale));
+            }
+
+            .tech-icon svg {
+                width: calc(20px * var(--scale));
+                height: calc(20px * var(--scale));
+            }
+
+            .tech-icon img {
+                width: calc(24px * var(--scale));
+                height: calc(24px * var(--scale));
+            }
+
+            .tech-icon::after {
+                bottom: calc(-28px * var(--scale));
+                font-size: calc(0.7rem * var(--scale));
+            }
+
+            /* Scroll Explore */
+            .scroll-explore {
+                gap: calc(12px * var(--scale));
+                bottom: calc(10rem * var(--scale));
+            }
+
+            .scroll-text {
+                font-size: calc(0.65rem * var(--scale));
+            }
+
+            .wave-blobs-container {
+                gap: calc(8px * var(--scale));
+                height: calc(50px * var(--scale));
+            }
+
+            .morphing-blob {
+                width: calc(15px * var(--scale));
+                height: calc(15px * var(--scale));
+            }
+
+            @keyframes wave-morph {
+                0%, 100% {
+                    transform: translateY(0) scale(1);
+                    border-radius: 50% 50% 50% 50%;
+                }
+                25% {
+                    transform: translateY(calc(-30px * var(--scale))) scale(1.1);
+                    border-radius: 40% 60% 70% 30%;
+                }
+                50% {
+                    transform: translateY(calc(-35px * var(--scale))) scale(0.9);
+                    border-radius: 70% 30% 40% 60%;
+                }
+                75% {
+                    transform: translateY(calc(-30px * var(--scale))) scale(1.05);
+                    border-radius: 30% 70% 60% 40%;
+                }
+            }
+
+            /* Projects */
+            .project-number-display {
+                font-size: calc(28rem * var(--scale));
+            }
+
+            .project-title-overlay {
+                top: calc(80px * var(--scale));
+                left: calc(80px * var(--scale));
+            }
+
+            .project-description {
+                top: calc(80px * var(--scale));
+                right: calc(80px * var(--scale));
+                font-size: calc(1.35rem * var(--scale));
+                max-width: calc(600px * var(--scale));
+            }
+
+            .project-title-text {
+                font-size: calc(4.5rem * var(--scale));
+                max-width: calc(700px * var(--scale));
+                margin-bottom: calc(20px * var(--scale));
+            }
+
+            .project-badge {
+                padding: calc(10px * var(--scale)) calc(24px * var(--scale));
+                font-size: calc(0.75rem * var(--scale));
+            }
+
+            /* Construction Banner */
+            .construction-banner {
+                height: calc(20vh * var(--scale));
+            }
+
+            .construction-text-container {
+                padding: calc(60px * var(--scale)) calc(80px * var(--scale));
+                border-radius: calc(20px * var(--scale));
+                border: calc(4px * var(--scale)) solid var(--construction-yellow);
+            }
+
+            .construction-title {
+                font-size: calc(4rem * var(--scale));
+                margin-bottom: calc(20px * var(--scale));
+            }
+
+            .construction-subtitle {
+                font-size: calc(1.2rem * var(--scale));
+                margin-bottom: calc(30px * var(--scale));
+            }
+
+            .construction-dismiss {
+                font-size: calc(0.9rem * var(--scale));
+                padding: calc(12px * var(--scale)) calc(32px * var(--scale));
+                border: calc(2px * var(--scale)) solid var(--construction-yellow);
+            }
+
+            /* Experience Section */
+            .experience-heading {
+                font-size: calc(8rem * var(--scale));
+                margin-bottom: calc(80px * var(--scale));
+            }
+
+            .category-toggle {
+                padding: calc(4px * var(--scale));
+                margin-bottom: calc(60px * var(--scale));
+            }
+
+            .category-btn {
+                padding: calc(12px * var(--scale)) calc(32px * var(--scale));
+                font-size: calc(0.85rem * var(--scale));
+            }
+
+            .carousel-wrapper {
+                height: calc(550px * var(--scale));
+            }
+
+            .experience-card {
+                width: calc(320px * var(--scale));
+                height: calc(480px * var(--scale));
+                border-radius: calc(32px * var(--scale));
+            }
+
+            .card-image {
+                height: calc(280px * var(--scale));
+            }
+
+            .card-content {
+                padding: calc(24px * var(--scale));
+            }
+
+            .card-date {
+                font-size: calc(0.75rem * var(--scale));
+                margin-bottom: calc(12px * var(--scale));
+            }
+
+            .card-title {
+                font-size: calc(1.4rem * var(--scale));
+                margin-bottom: calc(8px * var(--scale));
+            }
+
+            .card-company {
+                font-size: calc(1rem * var(--scale));
+                margin-bottom: calc(16px * var(--scale));
+            }
+
+            .card-description {
+                font-size: calc(0.85rem * var(--scale));
+            }
+
+            .carousel-indicators {
+                margin-top: calc(40px * var(--scale));
+                gap: calc(12px * var(--scale));
+            }
+
+            .carousel-indicator-dot {
+                width: calc(10px * var(--scale));
+                height: calc(10px * var(--scale));
+            }
+
+            /* Expanded Card */
+            .expanded-card {
+                width: calc(320px * var(--scale));
+                height: calc(480px * var(--scale));
+                border-radius: calc(32px * var(--scale));
+            }
+
+            .expanded-card.morphing {
+                width: calc(680px * var(--scale));
+                height: calc(560px * var(--scale));
+                border-radius: calc(24px * var(--scale));
+            }
+
+            .expanded-close {
+                top: calc(16px * var(--scale));
+                right: calc(16px * var(--scale));
+                width: calc(40px * var(--scale));
+                height: calc(40px * var(--scale));
+            }
+
+            .expanded-image-wrap {
+                height: calc(200px * var(--scale));
+            }
+
+            .expanded-content {
+                padding: calc(32px * var(--scale));
+            }
+
+            .expanded-date {
+                font-size: calc(0.75rem * var(--scale));
+                margin-bottom: calc(12px * var(--scale));
+            }
+
+            .expanded-title {
+                font-size: calc(1.8rem * var(--scale));
+                margin-bottom: calc(8px * var(--scale));
+            }
+
+            .expanded-company {
+                font-size: calc(1.1rem * var(--scale));
+                margin-bottom: calc(12px * var(--scale));
+            }
+
+            .expanded-description {
+                font-size: calc(0.95rem * var(--scale));
+                margin-bottom: calc(24px * var(--scale));
+            }
+
+            .details-heading {
+                font-size: calc(0.8rem * var(--scale));
+                margin-bottom: calc(12px * var(--scale));
+                margin-top: calc(8px * var(--scale));
+            }
+
+            .details-list {
+                margin-bottom: calc(20px * var(--scale));
+            }
+
+            .details-list li {
+                font-size: calc(0.9rem * var(--scale));
+                padding-left: calc(16px * var(--scale));
+            }
+
+            .details-list li::before {
+                width: calc(6px * var(--scale));
+                height: calc(6px * var(--scale));
+            }
+
+            .details-tags {
+                gap: calc(8px * var(--scale));
+            }
+
+            .detail-tag {
+                padding: calc(6px * var(--scale)) calc(14px * var(--scale));
+                font-size: calc(0.78rem * var(--scale));
+            }
+
+            /* Footer */
+            .cta-text {
+                font-size: calc(1.25rem * var(--scale));
+                margin-bottom: calc(40px * var(--scale));
+            }
+
+            .cta-email {
+                font-size: calc(5rem * var(--scale));
+            }
+
+            /* Section Indicator */
+            .section-indicator {
+                bottom: calc(100px * var(--scale));
+                gap: calc(24px * var(--scale));
+            }
+
+            .indicator-item {
+                width: calc(60px * var(--scale));
+                height: calc(4px * var(--scale));
+            }
+
+            .indicator-pill {
+                height: calc(4px * var(--scale));
+                border-radius: calc(2px * var(--scale));
+            }
+
+            .indicator-number {
+                font-size: calc(2.5rem * var(--scale));
+                bottom: calc(15px * var(--scale));
+            }
+
+            /* Contact Dropup */
+            .contact-dropup {
+                bottom: calc(5rem * var(--scale));
+                right: calc(2.7rem * var(--scale));
+                min-width: calc(200px * var(--scale));
+                border-radius: calc(12px * var(--scale));
+                padding: calc(12px * var(--scale));
+            }
+
+            .contact-dropup-item {
+                gap: calc(12px * var(--scale));
+                padding: calc(14px * var(--scale)) calc(20px * var(--scale));
+                font-size: calc(0.95rem * var(--scale));
+                border-radius: calc(8px * var(--scale));
+            }
+
+            .contact-dropup-item:hover {
+                transform: translateX(calc(-4px * var(--scale)));
+            }
+
+            .contact-dropup-icon {
+                width: calc(20px * var(--scale));
+                height: calc(20px * var(--scale));
+            }
         }
     </style>
 </head>
@@ -1366,48 +2542,44 @@
         <div class="page hero-page">
             <div class="company-carousel-container">
                 <div class="carousel-track">
-                    <div class="company-logo"><span>BMW M Motorsport</span></div>
-                    <div class="company-logo"><span>RWTH Aachen University</span></div>
-                    <div class="company-logo"><span>Porsche AG</span></div>
-                    <div class="company-logo"><span>BMW Group</span></div>
-                    <div class="company-logo"><span>WZL Lab Aachen</span></div>
-                    <div class="company-logo"><span>Bosch Engineering GmbH</span></div>
-                    <div class="company-logo"><span>SAL Aachen</span></div>
-                    <div class="company-logo"><span>MAN Energy</span></div>
-                    <div class="company-logo"><span>GWB Drive Shafts</span></div>
-                    <div class="company-logo"><span>IKA Aachen</span></div>
-                    <div class="company-logo"><span>BMW M Motorsport</span></div>
-                    <div class="company-logo"><span>RWTH Aachen University</span></div>
-                    <div class="company-logo"><span>Porsche AG</span></div>
-                    <div class="company-logo"><span>BMW Group</span></div>
-                    <div class="company-logo"><span>WZL Lab Aachen</span></div>
-                    <div class="company-logo"><span>Bosch Engineering GmbH</span></div>
-                    <div class="company-logo"><span>SAL Aachen</span></div>
-                    <div class="company-logo"><span>MAN Energy</span></div>
-                    <div class="company-logo"><span>GWB Drive Shafts</span></div>
-                    <div class="company-logo"><span>IKA Aachen</span></div>
+                    <div class="company-logo"> <img src="images/company_logos/bmw_motorsport.png" ></div>
+                    <div class="company-logo"> <img src="images/company_logos/rwth.png" ></div>
+                    <div class="company-logo"> <img src="images/company_logos/porsche.png" ></div>
+                    <div class="company-logo"> <img src="images/company_logos/bmw.png" ></div>
+                    <div class="company-logo"> <img src="images/company_logos/wzl.png" ></div>
+                    <div class="company-logo"> <img src="images/company_logos/bosch.png" ></div>
+                    <div class="company-logo"> <img src="images/company_logos/man.png" ></div>
+                    <div class="company-logo"> <img src="images/company_logos/gwb.png" ></div>
+                    <div class="company-logo"> <img src="images/company_logos/ika.png" ></div>
+                    <div class="company-logo"> <img src="images/company_logos/bmw_motorsport.png" ></div>
+                    <div class="company-logo"> <img src="images/company_logos/rwth.png" ></div>
+                    <div class="company-logo"> <img src="images/company_logos/porsche.png" ></div>
+                    <div class="company-logo"> <img src="images/company_logos/bmw.png" ></div>
+                    <div class="company-logo"> <img src="images/company_logos/wzl.png" ></div>
+                    <div class="company-logo"> <img src="images/company_logos/bosch.png" ></div>
+                    <div class="company-logo"> <img src="images/company_logos/man.png" ></div>
+                    <div class="company-logo"> <img src="images/company_logos/gwb.png" ></div>
+                    <div class="company-logo"> <img src="images/company_logos/ika.png" ></div>
                 </div>
                 <div aria-hidden class="carousel-track">
-                    <div class="company-logo"><span>BMW M Motorsport</span></div>
-                    <div class="company-logo"><span>RWTH Aachen University</span></div>
-                    <div class="company-logo"><span>Porsche AG</span></div>
-                    <div class="company-logo"><span>BMW Group</span></div>
-                    <div class="company-logo"><span>WZL Lab Aachen</span></div>
-                    <div class="company-logo"><span>Bosch Engineering GmbH</span></div>
-                    <div class="company-logo"><span>SAL Aachen</span></div>
-                    <div class="company-logo"><span>MAN Energy</span></div>
-                    <div class="company-logo"><span>GWB Drive Shafts</span></div>
-                    <div class="company-logo"><span>IKA Aachen</span></div>
-                    <div class="company-logo"><span>BMW M Motorsport</span></div>
-                    <div class="company-logo"><span>RWTH Aachen University</span></div>
-                    <div class="company-logo"><span>Porsche AG</span></div>
-                    <div class="company-logo"><span>BMW Group</span></div>
-                    <div class="company-logo"><span>WZL Lab Aachen</span></div>
-                    <div class="company-logo"><span>Bosch Engineering GmbH</span></div>
-                    <div class="company-logo"><span>SAL Aachen</span></div>
-                    <div class="company-logo"><span>MAN Energy</span></div>
-                    <div class="company-logo"><span>GWB Drive Shafts</span></div>
-                    <div class="company-logo"><span>IKA Aachen</span></div>
+                    <div class="company-logo"> <img src="images/company_logos/bmw_motorsport.png" ></div>
+                    <div class="company-logo"> <img src="images/company_logos/rwth.png" ></div>
+                    <div class="company-logo"> <img src="images/company_logos/porsche.png" ></div>
+                    <div class="company-logo"> <img src="images/company_logos/bmw.png" ></div>
+                    <div class="company-logo"> <img src="images/company_logos/wzl.png" ></div>
+                    <div class="company-logo"> <img src="images/company_logos/bosch.png" ></div>
+                    <div class="company-logo"> <img src="images/company_logos/man.png" ></div>
+                    <div class="company-logo"> <img src="images/company_logos/gwb.png" ></div>
+                    <div class="company-logo"> <img src="images/company_logos/ika.png" ></div>
+                    <div class="company-logo"> <img src="images/company_logos/bmw_motorsport.png" ></div>
+                    <div class="company-logo"> <img src="images/company_logos/rwth.png" ></div>
+                    <div class="company-logo"> <img src="images/company_logos/porsche.png" ></div>
+                    <div class="company-logo"> <img src="images/company_logos/bmw.png" ></div>
+                    <div class="company-logo"> <img src="images/company_logos/wzl.png" ></div>
+                    <div class="company-logo"> <img src="images/company_logos/bosch.png" ></div>
+                    <div class="company-logo"> <img src="images/company_logos/man.png" ></div>
+                    <div class="company-logo"> <img src="images/company_logos/gwb.png" ></div>
+                    <div class="company-logo"> <img src="images/company_logos/ika.png" ></div>
                 </div>
             </div>
 
@@ -1491,17 +2663,17 @@
             <div class="projects-track" id="projectsTrack">
                 <div class="project-slide">
                     <div class="project-content">
-                        <div class="project-number-display">01</div>
+                        <a href="fraud_project.html" class="project-number-display">01</a>
                     </div>
                 </div>
                 <div class="project-slide">
                     <div class="project-content">
-                        <div class="project-number-display">02</div>
+                        <a href="tams.html" class="project-number-display">02</a>
                     </div>
                 </div>
                 <div class="project-slide">
                     <div class="project-content">
-                        <div class="project-number-display">03</div>
+                        <a href="https://github.com/LewisSchmidtke/NeuralNetworkFromScratch" target="_blank" class="project-number-display">03</a>
                     </div>
                 </div>
             </div>
