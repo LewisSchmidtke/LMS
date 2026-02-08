@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>End-to-End Fraud Detection | Lewis M. Schmitke</title>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #000000;
+            --white: #ffffff;
+            --green: #00E842;
+            --grey-50: #fafafa;
+            --grey-100: #f5f5f5;
+            --grey-200: #e5e5e5;
+            --grey-300: #d4d4d4;
+            --grey-400: #a3a3a3;
+            --grey-500: #737373;
+            --grey-600: #525252;
+            --grey-700: #404040;
+            --grey-800: #262626;
+            --grey-900: #171717;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Manrope', sans-serif;
+            background: var(--white);
+            color: var(--grey-900);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--grey-200);
+        }
+
+        .nav-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 24px 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--grey-700);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .back-btn:hover {
+            color: var(--green);
+        }
+
+        .back-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .nav-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--black);
+            letter-spacing: -0.02em;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 140px 80px 80px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .project-label {
+            display: inline-block;
+            padding: 8px 20px;
+            background: var(--green);
+            color: var(--white);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border-radius: 50px;
+            margin-bottom: 32px;
+        }
+
+        h1 {
+            font-size: 4.5rem;
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            line-height: 1.1;
+            margin-bottom: 32px;
+            color: var(--black);
+        }
+
+        .hero-description {
+            font-size: 1.4rem;
+            font-weight: 400;
+            color: var(--grey-600);
+            line-height: 1.7;
+            max-width: 900px;
+            margin-bottom: 48px;
+        }
+
+        .project-meta {
+            display: flex;
+            gap: 48px;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .meta-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--grey-500);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .meta-value {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--black);
+        }
+
+        /* Content Sections */
+        .content-section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 80px 80px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            color: var(--black);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--green);
+            border-radius: 2px;
+        }
+
+        .section-title-white {
+            color: var(--white);
+        }
+
+        .section-title-white::after {
+            background: var(--white);
+        }
+
+        .view-button {
+            padding: 12px 32px;
+            background: var(--green);
+            color: var(--black);
+            border: none;
+            border-radius: 50px;
+            font-family: 'Manrope', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .view-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 232, 66, 0.3);
+        }
+
+        .view-button:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 12px rgba(0, 232, 66, 0.3);
+        }
+
+        .section-description {
+            font-size: 1.15rem;
+            color: var(--grey-600);
+            line-height: 1.8;
+            margin-top: 32px;
+            max-width: 900px;
+        }
+
+        .section-description-white {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Architecture Diagram */
+        .architecture-container {
+            background: var(--grey-50);
+            border-radius: 24px;
+            padding: 60px;
+            margin-top: 48px;
+            border: 1px solid var(--grey-200);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .architecture-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('images/system_architecture.png');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: grayscale(100%);
+            opacity: 0.15;
+            transition: filter 0.5s ease, opacity 0.5s ease;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .architecture-background.revealed {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+
+        .architecture-flow {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 32px;
+            margin-top: 40px;
+            position: relative;
+            z-index: 2;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .architecture-flow.hidden {
+            opacity: 0;
+            transform: scale(0.95);
+            pointer-events: none;
+        }
+
+        .flow-item {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 32px 24px;
+            border: 2px solid var(--grey-200);
+            transition: all 0.3s ease, opacity 0.5s ease, transform 0.5s ease;
+            position: relative;
+        }
+
+        .flow-item:hover {
+            border-color: var(--green);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0, 232, 66, 0.15);
+        }
+
+        .flow-number {
+            position: absolute;
+            top: -16px;
+            left: 24px;
+            width: 32px;
+            height: 32px;
+            background: var(--green);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .flow-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--black);
+            margin-bottom: 12px;
+            margin-top: 8px;
+        }
+
+        .flow-description {
+            font-size: 0.95rem;
+            color: var(--grey-600);
+            line-height: 1.6;
+        }
+
+        /* Tech Stack Grid */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .tech-card {
+            background: var(--white);
+            border: 2px solid var(--grey-200);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .tech-card:hover {
+            border-color: var(--green);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0, 232, 66, 0.1);
+        }
+
+        .tech-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 16px;
+            background: var(--grey-100);
+            border: 1px solid var(--grey-200);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--grey-600);
+            transition: all 0.25s ease;
+        }
+
+        .tech-card:hover .tech-icon {
+            background: var(--green);
+            border-color: var(--green);
+            color: var(--black);
+        }
+
+        .tech-icon img {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+        }
+
+        .tech-name {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--black);
+        }
+
+        /* Features Section - Green Background */
+        .features-section {
+            background: var(--green);
+            padding: 80px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .feature-card {
+            background: var(--black);
+            border-radius: 20px;
+            padding: 40px 32px;
+            border: 2px solid var(--black);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .feature-card:hover {
+            border-color: var(--white);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-number {
+            position: absolute;
+            top: -16px;
+            left: 32px;
+            width: 48px;
+            height: 48px;
+            background: var(--white);
+            color: var(--black);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.3rem;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 12px;
+            margin-top: 16px;
+        }
+
+        .feature-description {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.7;
+        }
+
+        /* Code Block */
+        .code-container {
+            background: var(--grey-900);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 48px;
+            overflow-x: auto;
+            border: 1px solid var(--grey-800);
+        }
+
+        .code-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--grey-700);
+        }
+
+        .code-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .code-dot:nth-child(1) { background: #ff5f56; }
+        .code-dot:nth-child(2) { background: #ffbd2e; }
+        .code-dot:nth-child(3) { background: #27c93f; }
+
+        .code-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--grey-400);
+            margin-left: 8px;
+        }
+
+        pre {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            color: var(--grey-300);
+            overflow-x: auto;
+        }
+
+        .code-keyword { color: #ff79c6; }
+        .code-function { color: #50fa7b; }
+        .code-string { color: #f1fa8c; }
+        .code-comment { color: var(--grey-500); font-style: italic; }
+
+        /* Challenges Section */
+        .challenge-list {
+            margin-top: 48px;
+        }
+
+        .challenge-item {
+            background: var(--white);
+            border-left: 4px solid var(--green);
+            border-radius: 12px;
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s ease;
+        }
+
+        .challenge-item:hover {
+            transform: translateX(8px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        }
+
+        .challenge-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--black);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .challenge-icon {
+            width: 8px;
+            height: 8px;
+            background: var(--green);
+            border-radius: 50%;
+        }
+
+        .challenge-description {
+            font-size: 1rem;
+            color: var(--grey-600);
+            line-height: 1.7;
+            margin-left: 20px;
+        }
+
+        /* Results/Impact */
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .impact-card {
+            text-align: center;
+            padding: 40px 32px;
+            background: var(--grey-50);
+            border-radius: 20px;
+            border: 1px solid var(--grey-200);
+            transition: all 0.3s ease;
+        }
+
+        .impact-card:hover {
+            background: var(--white);
+            border-color: var(--green);
+            transform: translateY(-4px);
+        }
+
+        .impact-number {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--green);
+            line-height: 1;
+            margin-bottom: 16px;
+        }
+
+        .impact-label {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--black);
+            margin-bottom: 8px;
+        }
+
+        .impact-description {
+            font-size: 0.95rem;
+            color: var(--grey-600);
+            line-height: 1.6;
+        }
+
+        /* Footer CTA */
+        .footer-cta {
+            background: var(--black);
+            color: var(--white);
+            padding: 100px 80px;
+            text-align: center;
+        }
+
+        .cta-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            letter-spacing: -0.03em;
+        }
+
+        .cta-description {
+            font-size: 1.2rem;
+            color: var(--grey-400);
+            margin-bottom: 40px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 16px 40px;
+            border-radius: 50px;
+            font-family: 'Manrope', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--green);
+            color: var(--black);
+            border: 2px solid var(--green);
+        }
+
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--green);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+        }
+
+        .btn-secondary:hover {
+            background: var(--white);
+            color: var(--black);
+            transform: translateY(-2px);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .nav-inner, .hero, .content-section, .features-section {
+                padding-left: 40px;
+                padding-right: 40px;
+            }
+
+            h1 {
+                font-size: 3.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-inner, .hero, .content-section, .features-section {
+                padding-left: 24px;
+                padding-right: 24px;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-description {
+                font-size: 1.1rem;
+            }
+
+            .architecture-container {
+                padding: 32px 24px;
+            }
+
+            .architecture-flow {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header {
+                flex-direction: column;
+                gap: 16px;
+                align-items: flex-start;
+            }
+
+            .footer-cta {
+                padding: 60px 24px;
+            }
+
+            .cta-title {
+                font-size: 2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-inner">
+            <a href="index.html" class="back-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Back to Portfolio
+            </a>
+            <div class="nav-title">End-to-End Fraud Detection</div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <span class="project-label">Machine Learning • Data Engineering</span>
+        <h1>End-to-End Fraud Detection Pipeline</h1>
+        <p class="hero-description">
+            A comprehensive fraud detection system built from scratch, featuring real-time transaction processing,
+            custom ML models, and a complete data pipeline. The project demonstrates machine learning and data engineering
+            expertise with Python, SQL, PyTorch, Docker, and Apache Kafka + Spark.
+        </p>
+        <div class="project-meta">
+            <div class="meta-item">
+                <span class="meta-label">Status</span>
+                <span class="meta-value">Under Development</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section class="content-section" style="background: var(--grey-50); border-top: 1px solid var(--grey-200); border-bottom: 1px solid var(--grey-200);">
+        <div class="section-header">
+            <h2 class="section-title">System Architecture</h2>
+            <button class="view-button" id="viewButton">Hold to View</button>
+        </div>
+        <p class="section-description">
+            This project tackles the critical challenge of real-time fraud detection in financial transactions.
+            Built as an end-to-end solution, it includes data generation, streaming ingestion, feature engineering,
+            model training and real-time inference.
+        </p>
+
+        <div class="architecture-container">
+            <div class="architecture-background" id="archBackground"></div>
+            <div class="architecture-flow" id="archFlow">
+                <div class="flow-item">
+                    <div class="flow-number">1</div>
+                    <div class="flow-title">Data Generation</div>
+                    <div class="flow-description">Custom synthetic transaction generator able to generate normal and
+                      fraudulent purchasing patterns.</div>
+                </div>
+                <div class="flow-item">
+                      <div class="flow-number">2</div>
+                      <div class="flow-title">Storage</div>
+                      <div class="flow-description">Relational database architecture for user, device, payment method,
+                        transaction and merchant relations.</div>
+                  </div>
+                <div class="flow-item">
+                    <div class="flow-number">3</div>
+                    <div class="flow-title">Stream Processing</div>
+                    <div class="flow-description">Apache Kafka for real-time data ingestion.</div>
+                </div>
+                <div class="flow-item">
+                    <div class="flow-number">4</div>
+                    <div class="flow-title">Feature Engineering</div>
+                    <div class="flow-description">Feature Engineering using Apache Spark to analyze windowed features.</div>
+                </div>
+                <div class="flow-item">
+                    <div class="flow-number">5</div>
+                    <div class="flow-title">ML Model</div>
+                    <div class="flow-description">Custom PyTorch model</div>
+                </div>
+                <div class="flow-item">
+                    <div class="flow-number">6</div>
+                    <div class="flow-title">Inference</div>
+                    <div class="flow-description">NVIDIA Triton inference server for real-time predictions</div>
+                </div>
+                <div class="flow-item">
+                    <div class="flow-number">6</div>
+                    <div class="flow-title">Storage & Analytics</div>
+                    <div class="flow-description">PostgreSQL for transactions, Redis for caching, and dashboard for monitoring</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Stack -->
+    <section class="content-section">
+        <h2 class="section-title">Technology Stack</h2>
+        <p class="section-description">
+            The project leverages a modern machine learning and data engineering stack for performance, scalability and
+          development efficiency.
+        </p>
+
+        <div class="tech-grid">
+            <div class="tech-card">
+                <div class="tech-icon">
+                    <img src="images/tech-icons/python-icon.png" alt="Python">
+                </div>
+                <div class="tech-name">Python</div>
+            </div>
+            <div class="tech-card">
+                <div class="tech-icon">
+                    <img src="images/tech-icons/pytorch-icon.png" alt="PyTorch">
+                </div>
+                <div class="tech-name">PyTorch</div>
+            </div>
+            <div class="tech-card">
+                <div class="tech-icon">
+                    <img src="images/tech-icons/spark-icon.png" alt="Apache Spark">
+                </div>
+                <div class="tech-name">Apache Spark</div>
+            </div>
+            <div class="tech-card">
+                <div class="tech-icon">
+                    <img src="images/tech-icons/pandas-icon.png" alt="Pandas">
+                </div>
+                <div class="tech-name">Pandas</div>
+            </div>
+            <div class="tech-card">
+                <div class="tech-icon">
+                    <img src="images/tech-icons/postgresql-icon.png" alt="PostgreSQL">
+                </div>
+                <div class="tech-name">PostgreSQL</div>
+            </div>
+            <div class="tech-card">
+                <div class="tech-icon">
+                    <img src="images/tech-icons/ER-api-icon.png" alt="ExchangeRate API">
+                </div>
+                <div class="tech-name">ExchangeRate API</div>
+            </div>
+            <div class="tech-card">
+                <div class="tech-icon">
+                    <img src="images/tech-icons/docker-icon.png" alt="Docker">
+                </div>
+                <div class="tech-name">Docker</div>
+            </div>
+            <div class="tech-card">
+                <div class="tech-icon">
+                    <img src="images/tech-icons/kafka-icon.png" alt="Apache Kafka">
+                </div>
+                <div class="tech-name">Apache Kafka</div>
+            </div>
+            <div class="tech-card">
+                <div class="tech-icon">
+                    <img src="images/tech-icons/triton-icon.png" alt="NVIDIA Triton">
+                </div>
+                <div class="tech-name">NVIDIA Triton</div>
+            </div>
+            <div class="tech-card">
+                <div class="tech-icon">
+                    <img src="images/tech-icons/scikit-learn-icon.png" alt="Scikit-learn">
+                </div>
+                <div class="tech-name">Scikit-learn</div>
+            </div>
+            <div class="tech-card">
+                <div class="tech-icon">
+                    <img src="images/tech-icons/matplotlib-icon.png" alt="Matplotlib">
+                </div>
+                <div class="tech-name">Matplotlib</div>
+            </div>
+            <div class="tech-card">
+                <div class="tech-icon">
+                    <img src="images/tech-icons/seaborn-icon.png" alt="Seaborn">
+                </div>
+                <div class="tech-name">Seaborn</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Features - Green Background -->
+    <section class="features-section">
+        <h2 class="section-title section-title-white">Key Features</h2>
+        <p class="section-description section-description-white">
+            The system incorporates advanced techniques and best practices from both data engineering and
+            machine learning domains.
+        </p>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-number">01</div>
+                <div class="feature-title">Synthetic Data Generation</div>
+                <div class="feature-description">
+                    Built custom data generators that create realistic transaction patterns with configurable fraud
+                    scenarios. Includes temporal patterns, user behavior simulation, and merchant relationships.
+                </div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-number">02</div>
+                <div class="feature-title">Deep Learning Model</div>
+                <div class="feature-description">
+                    Custom PyTorch neural network with attention mechanisms for capturing sequential patterns.
+                    Achieves 96% precision and 94% recall on validation set.
+                </div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-number">03</div>
+                <div class="feature-title">Real-Time Processing</div>
+                <div class="feature-description">
+                    Sub-50ms inference latency with distributed processing capabilities. Handles 5,000+
+                    transactions per second with automatic scaling.
+                </div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-number">04</div>
+                <div class="feature-title">Feature Engineering</div>
+                <div class="feature-description">
+                    Advanced feature extraction including velocity metrics, anomaly detection scores,
+                    behavioral patterns, and graph-based features.
+                </div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-number">05</div>
+                <div class="feature-title">Monitoring Dashboard</div>
+                <div class="feature-description">
+                    Real-time monitoring of system health, model performance, and fraud detection metrics.
+                    Includes alerting for anomalies and performance degradation.
+                </div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-number">06</div>
+                <div class="feature-title">MLOps Pipeline</div>
+                <div class="feature-description">
+                    Automated training pipeline with experiment tracking, model versioning, and A/B testing
+                    capabilities. Continuous model retraining with new data.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Deep Dive -->
+    <section class="content-section">
+        <h2 class="section-title">Technical Implementation</h2>
+        <p class="section-description">
+            Under Development.
+        </p>
+
+        <div class="code-container">
+            <div class="code-header">
+                <div class="code-dot"></div>
+                <div class="code-dot"></div>
+                <div class="code-dot"></div>
+                <div class="code-title">fraud_detection_model.py</div>
+            </div>
+
+            <pre>
+              <code>
+                <span class="code-keyword">import</span> torch
+                <span class="code-keyword">import</span> torch.nn <span class="code-keyword">as</span> nn
+                <br>
+                <span class="code-keyword">class</span> <span class="code-function">FraudDetectionModel</span>(nn.Module):
+                    <span class="code-keyword">def</span> <span class="code-function">__init__</span>(self):
+                <br>
+                    MODEL UNDER CONSTRUCTION
+
+              </code>
+            </pre>
+        </div>
+    </section>
+
+    <!-- Challenges -->
+    <section class="content-section" style="background: var(--grey-50);">
+        <h2 class="section-title">Challenges & Solutions</h2>
+        <p class="section-description">
+            Building a production-grade fraud detection system presented several complex challenges that required
+            innovative solutions.
+        </p>
+
+        <div class="challenge-list">
+            <div class="challenge-item">
+                <div class="challenge-title">
+                    <div class="challenge-icon"></div>
+                    Synthetic Fraud Patterns
+                </div>
+                <div class="challenge-description">
+                  A good training dataset has lots of variability. Fraudulent transactions only make up a small percent
+                  of actual transactions, thus leading to imbalanced datasets. Furthermore, fraudulent transactions come
+                  in a variety of patterns which can be difficult to accurately model.
+                </div>
+            </div>
+            <div class="challenge-item">
+                <div class="challenge-title">
+                    <div class="challenge-icon"></div>
+                    Real-Time Latency Requirements
+                </div>
+                <div class="challenge-description">
+                    Low latency requirement for real-time fraud detection. <br>
+                    [Challenge currently being handled]
+                </div>
+            </div>
+            <div class="challenge-item">
+                <div class="challenge-title">
+                    <div class="challenge-icon"></div>
+                    Scalable Data Pipeline
+                </div>
+                <div class="challenge-description">
+                    Processing millions of transactions daily requires robust infrastructure. To simulate this data
+                    volume, I implemented Kafka for streaming and Spark for distributed processing.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact & Results -->
+    <section class="content-section">
+        <h2 class="section-title">Impact & Results</h2>
+        <p class="section-description">
+            The results of the fraud detection pipeline will be presented here once the project is finished.
+        </p>
+
+        <div class="impact-grid">
+            <div class="impact-card">
+                <div class="impact-number">XYZ%</div>
+                <div class="impact-label">Precision</div>
+                <div class="impact-description">
+                    Placeholder
+                </div>
+            </div>
+            <div class="impact-card">
+                <div class="impact-number">XYZ%</div>
+                <div class="impact-label">Recall</div>
+                <div class="impact-description">
+                    Placeholder
+                </div>
+            </div>
+            <div class="impact-card">
+                <div class="impact-number">XYZ</div>
+                <div class="impact-label">Latency</div>
+                <div class="impact-description">
+                    Placeholder
+                </div>
+            </div>
+            <div class="impact-card">
+                <div class="impact-number">XYZ</div>
+                <div class="impact-label">TPS</div>
+                <div class="impact-description">
+                    Placeholder
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer CTA -->
+    <section class="footer-cta">
+        <h2 class="cta-title">Check the current state of this project on Github!</h2>
+<!--        <p class="cta-description">-->
+<!--            I'd be happy to discuss this project in detail or explore how similar solutions-->
+<!--            could benefit your organization.-->
+<!--        </p>-->
+        <div class="cta-buttons">
+            <a href="https://github.com/LewisSchmidtke/end-to-endFraudDetection" target="_blank" class="btn btn-primary">Github Repo</a>
+            <a href="index.html" class="btn btn-secondary">View More Projects</a>
+        </div>
+    </section>
+
+    <script>
+        // View Button - Hold to reveal architecture diagram
+        const viewButton = document.getElementById('viewButton');
+        const archBackground = document.getElementById('archBackground');
+        const archFlow = document.getElementById('archFlow');
+
+        let isPressed = false;
+
+        // Mouse events
+        viewButton.addEventListener('mousedown', () => {
+            isPressed = true;
+            revealDiagram();
+        });
+
+        viewButton.addEventListener('mouseup', () => {
+            isPressed = false;
+            hideDiagram();
+        });
+
+        viewButton.addEventListener('mouseleave', () => {
+            if (isPressed) {
+                isPressed = false;
+                hideDiagram();
+            }
+        });
+
+        // Touch events
+        viewButton.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            isPressed = true;
+            revealDiagram();
+        });
+
+        viewButton.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            isPressed = false;
+            hideDiagram();
+        });
+
+        viewButton.addEventListener('touchcancel', (e) => {
+            e.preventDefault();
+            isPressed = false;
+            hideDiagram();
+        });
+
+        function revealDiagram() {
+            archBackground.classList.add('revealed');
+            archFlow.classList.add('hidden');
+            viewButton.textContent = 'Release to Hide';
+        }
+
+        function hideDiagram() {
+            archBackground.classList.remove('revealed');
+            archFlow.classList.remove('hidden');
+            viewButton.textContent = 'Hold to View';
+        }
+    </script>
+</body>
+</html>
