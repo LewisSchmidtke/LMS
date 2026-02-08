@@ -196,7 +196,7 @@
         }
 
         // Custom easing function: very slow start, fast middle, very slow end
-        // This creates a velocity curve that peaks at 50% progress (180Â°)
+        // This creates a velocity curve that peaks at 50% progress (180°)
         function velocityCurveEasing(t) {
             // Ease-in-out with stronger acceleration
             // This makes beginning and end much slower
@@ -224,7 +224,7 @@
                 const elapsed = Date.now() - startTime;
                 const progress = Math.min(elapsed / ANIMATION_DURATION, 1);
 
-                // Apply velocity curve easing - peaks at 50% (180Â°)
+                // Apply velocity curve easing - peaks at 50% (180°)
                 const eased = velocityCurveEasing(progress);
 
                 const rotation = startRotation + totalRotation * eased;
@@ -360,6 +360,15 @@
         const SCROLL_THRESHOLD = 30;
 
         function handleWheel(e) {
+            // FIXED: Allow scrolling in expanded card content
+            if (isCardExpanded) {
+                const expandedContent = document.querySelector('.expanded-content');
+                if (expandedContent && expandedContent.contains(e.target)) {
+                    // Allow natural scrolling in the expanded card
+                    return;
+                }
+            }
+
             e.preventDefault();
 
             if (isAnimating) return;
@@ -433,27 +442,14 @@
         // ============================================
         const constructionBanner = document.getElementById('constructionBanner');
         const constructionContent = document.getElementById('constructionContent');
-        // let bannerShown = false;
 
-        // function showConstructionBanner() {
-        //     if (bannerShown || currentProject !== 0) return;
-        //
-        //     // Wait a bit for page transition, then show banner
-        //     setTimeout(() => {
-        //         if (currentVerticalPage === 1 && currentProject === 0) {
-        //             constructionBanner.classList.add('visible');
-        //             bannerShown = true;
-        //         }
-        //     }, 800);
-        // }
         function showConstructionBanner() {
-            if (currentProject !== 0) return;  // REMOVED: bannerShown check
+            if (currentProject !== 0) return;
 
             // Wait a bit for page transition, then show banner
             setTimeout(() => {
                 if (currentVerticalPage === 1 && currentProject === 0) {
                     constructionBanner.classList.add('visible');
-                    // REMOVED: bannerShown = true;
                 }
             }, 800);
         }
@@ -501,7 +497,7 @@
                 icon.style.transform = 'scale(0)';
             });
 
-            // Timing â€“ much faster
+            // Timing – much faster
             const SLIDE_TIME = 30;   // Existing icons slide to make room
             const POP_TIME = 120;     // New icon pops in
             const PAUSE_TIME = 50;    // Tiny breath between steps
@@ -618,62 +614,98 @@
         // Experience Carousel + Category Switching
         // ============================================
 
-        // Sample data
+        // UPDATED: Complete data with unique responsibilities and technologies for each experience
         const industryData = [
             {
                 image: 'images/company_logos/bmw_motorsport.png',
                 date: '10.2025 - Present',
                 title: 'Data/Performance Engineer Intern',
                 company: 'BMW M Motorsport',
-                description: 'Built a data analysis pipeline that transforms more than 1 million datapoints of competitor ' +
-                    'race data into derived performance and strategy indicators, used directly by chief engineers during race and preparation sessions.'
+                description: 'Built a data analysis pipeline that transforms more than 1 million datapoints of competitor race data into derived performance and strategy indicators, used directly by chief engineers during race and preparation sessions.',
+                responsibilities: [
+                    'Developed automated competitor analysis pipeline processing 1M+ data points per session',
+                    'Redevelopment of an energy management tool, with physical modeling and sweeping for in-car deployment',
+                    'Collaborated with race engineers to define KPIs and visualization requirements'
+                ],
+                technologies: ['Python', 'Pandas', 'NumPy', 'Seaborn']
             },
             {
                 image: 'images/company_logos/bmw.png',
                 date: '05.2025 - 10.2025',
                 title: 'Software Engineer Intern',
                 company: 'BMW Group',
-                description: 'Implemented a Python-based sensor data pipeline for high-frequency measurement data, ' +
-                    'covering optimized data loading, filtering, processing and augmentation for downstream analysis and modeling.'
+                description: 'Implemented a Python-based data pipeline for high-frequency measurement data, covering optimized data loading, filtering, processing and augmentation for downstream analysis and modeling.',
+                responsibilities: [
+                    'Built a GUI-based modeling tool for physical data, replacing a manual workflow and reducing per-data-point processing time from 15 minutes to 1 minute, saving more than 90%',
+                    'Part of special task force for time-sensitive challenges',
+                    'Close collaboration with test- and simulation engineers as well as the head of the department',
+                ],
+                technologies: ['Python', 'Pandas','NumPy', 'Git', 'Seaborn']
             },
             {
                 image: 'images/company_logos/wzl.png',
                 date: '02.2025 - 05.2025',
                 title: 'Data Scientist Working Student',
                 company: 'WZL Laboratory Aachen',
-                description: 'Analyzed machine and production data regarding hidden AI potentials in additive manufacturing environments.'
+                description: 'Analyzed machine and production data regarding hidden AI potentials in additive manufacturing environments.',
+                responsibilities: [
+                    'Conducted exploratory data analysis on manufacturing process data',
+                    'Presented findings to partners and cross-functional teams'
+                ],
+                technologies: ['Python', 'Seaborn']
             },
             {
                 image: 'images/company_logos/porsche.png',
                 date: '04.2024 - 10.2024',
                 title: 'MLOps Engineer Intern',
                 company: 'Porsche AG',
-                description: 'Developed MLOps pipelines in MS Azure and Python (PyTorch), including tabular datasets & ' +
-                    'model versioning, distributed multi-GPU training and automated metric tracking.'
+                description: 'Developed MLOps pipelines in MS Azure and Python (PyTorch), including tabular datasets & model versioning, distributed multi-GPU training and automated metric tracking.',
+                responsibilities: [
+                    'Architected end-to-end MLOps pipeline on Azure ML platform',
+                    'Implemented custom transformer architectures regarding Tokenization, Layering and Input in PyTorch',
+                    'Created custom data representations for combined material and geometry data',
+                ],
+                technologies: ['Python', 'PyTorch', 'MS Azure', 'Seaborn', 'Git']
             },
             {
                 image: 'images/company_logos/ika.png',
                 date: '04.2024 - 10.2024',
                 title: 'Bachelor Thesis - Grade A+',
                 company: 'IKA - RWTH',
-                description: 'TITLE: Data Format Research for machine learning based HIC predictions in structural vehicle Analysis.'
+                description: 'TITLE: Data Format Research for machine learning based HIC predictions in structural vehicle Analysis.',
+                responsibilities: [
+                    'Academic writing of my experiment results',
+                    'Presentation of experiment results',
+                ],
+                technologies: ['Python', 'PyTorch', 'MS Azure', 'Seaborn', 'Git']
             },
             {
                 image: 'images/company_logos/bosch.png',
                 date: '10.2023 - 03.2024',
                 title: 'ML Engineer',
                 company: 'Bosch Engineering GmbH',
-                description: 'Developed autoencoder models from the ground up for time series applications, implementing' +
-                    ' unique latent space designs and baseline architectures using Python and PyTorch.'
+                description: 'Developed autoencoder models from the ground up for time series applications, implementing unique latent space designs and baseline architectures using Python and PyTorch.',
+                responsibilities: [
+                    'Conducted vehicle simulations with IPGCarmaker',
+                    'Conducted experiments regarding the models functionality as a foundational model and transferability across datasets.',
+                    'Data analysis for time series data',
+                ],
+                technologies: ['Python', 'PyTorch', 'SciKit', 'Git', 'Pandas']
             },
             {
                 image: 'images/company_logos/wzl.png',
                 date: '04.2023 - 09.2023',
                 title: 'Computer Vision Engineer Intern',
                 company: 'Smart Automation Lab - A WZL Project',
-                description: 'Developed a custom object detection model and dataset improving the accuracy by 25%, by ' +
-                    'utilizing a different model architecture, better data augmentation techniques and a bigger dataset.'
-            },
+                description: 'Developed a custom object detection model and dataset improving the accuracy by 25%, by utilizing a different model architecture, better data augmentation techniques and a bigger dataset.',
+                responsibilities: [
+                    'Live video stream inference with ONNX runtime',
+                    'Implemented YOLO-based object detection model with custom modifications in robot behavior tree system',
+                    'Curated and annotated custom dataset',
+                    'Achieved 25% accuracy improvement over existing solution'
+                ],
+                technologies: ['Python', 'PyTorch', 'OpenCV', 'Git', 'ONNX', 'ROS']
+            }
         ];
 
         const academicData = [
@@ -682,21 +714,42 @@
                 date: '10.2025 - present',
                 title: 'Fastlane Scholarship',
                 company: 'BMW Group',
-                description: "One of a handful of students who has been selected for BMW's masters scholarship."
+                description: "One of a handful of students who has been selected for BMW's masters scholarship.",
+                responsibilities: [
+                    'Selected from 2000+ applicants for prestigious scholarship program',
+                    'Monthly stipend for M.Sc. studies',
+                    'Exclusive mentorship from BMW senior leaders',
+                ],
+                technologies: ['Leadership', 'Research', 'Innovation']
             },
             {
                 image: 'images/company_logos/rwth.png',
                 date: '10.2025 - present',
                 title: 'M.Sc. Engineering - Simulation Sciences',
                 company: 'RWTH Aachen University',
-                description: 'Specialization in Simulation Science with general degree in mechanical engineering.'
+                description: 'Specialization in Simulation Science with general degree in mechanical engineering and courses in:',
+                responsibilities: [
+                    'Machine Learning',
+                    'Finite Element Analysis (FEA)',
+                    'Automotive Engineering',
+                    'Business'
+                ],
+                technologies: ['Python', 'PyTorch', 'MATLAB', 'ANSYS']
             },
             {
                 image: 'images/company_logos/rwth.png',
                 date: '10.2019 - 03.2025',
                 title: 'B.Sc. Engineering - Automotive',
                 company: 'RWTH Aachen University',
-                description: 'Specialization in Automotive Engineering with general degree in mechanical engineering.'
+                description: 'Specialization in Automotive Engineering with general degree in mechanical engineering and courses in:',
+                responsibilities: [
+                    'Math (Calculus, Linear Algebra, Differential Equations, Numerical, Statistics)',
+                    'Mechanics (Static, Dynamic, Fluid)',
+                    'Electronics, Control Theory and Simulation',
+                    'Subjects from automotive specialization',
+                    'Programming with Python, Java and Matlab',
+                ],
+                technologies: ['CAD', 'Python', 'MATLAB', 'Simulink']
             }
         ];
 
@@ -832,7 +885,7 @@
                         if (Math.abs(carouselDragOffset) < 5) {
                             // If it's the center card, expand it
                             if (index === carouselCurrentIndex) {
-                                openCard(card);
+                                openCard(card, item); // Pass item data
                             } else {
                                 // Otherwise, center it
                                 goToCarouselCard(index);
@@ -840,7 +893,7 @@
                         }
                     } else if (currentCategory === 'academic') {
                         // Academic cards open directly
-                        openCard(card);
+                        openCard(card, item); // Pass item data
                     }
                 });
 
@@ -1173,9 +1226,11 @@
         const expandedTitle = document.getElementById('expandedTitle');
         const expandedCompany = document.getElementById('expandedCompany');
         const expandedDescription = document.getElementById('expandedDescription');
+        const expandedDetails = document.getElementById('expandedDetails');
         let activeSourceCard = null;
 
-        function openCard(card) {
+        // UPDATED: openCard function now accepts item data and populates unique content
+        function openCard(card, itemData) {
             if (isCardExpanded || isCategorySwitching) return;
             isCardExpanded = true;
             activeSourceCard = card;
@@ -1195,6 +1250,29 @@
             expandedTitle.textContent = title ? title.textContent : '';
             expandedCompany.textContent = company ? company.textContent : '';
             expandedDescription.textContent = desc ? desc.textContent : '';
+
+            // UPDATED: Populate unique responsibilities and technologies
+            let detailsHTML = '';
+
+            if (itemData.responsibilities && itemData.responsibilities.length > 0) {
+                detailsHTML += '<h3 class="details-heading">Key Responsibilities</h3>';
+                detailsHTML += '<ul class="details-list">';
+                itemData.responsibilities.forEach(resp => {
+                    detailsHTML += `<li>${resp}</li>`;
+                });
+                detailsHTML += '</ul>';
+            }
+
+            if (itemData.technologies && itemData.technologies.length > 0) {
+                detailsHTML += '<h3 class="details-heading">Technologies</h3>';
+                detailsHTML += '<div class="details-tags">';
+                itemData.technologies.forEach(tech => {
+                    detailsHTML += `<span class="detail-tag">${tech}</span>`;
+                });
+                detailsHTML += '</div>';
+            }
+
+            expandedDetails.innerHTML = detailsHTML;
 
             // Position expanded card exactly over the source card
             expandedCard.style.transition = 'none';
@@ -1259,7 +1337,6 @@
             }, 450);
         }
 
-        // Click on cards to expand â€“ use delegation on container
         // Close button
         expandedClose.addEventListener('click', (e) => {
             e.stopPropagation();
