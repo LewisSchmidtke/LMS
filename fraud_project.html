@@ -123,7 +123,7 @@
             font-weight: 400;
             color: var(--grey-600);
             line-height: 1.7;
-            max-width: 900px;
+            max-width: 1200px;
             margin-bottom: 48px;
         }
 
@@ -726,7 +726,9 @@
         <p class="hero-description">
             A comprehensive fraud detection system built from scratch, featuring real-time transaction processing,
             custom ML models, and a complete data pipeline. The project demonstrates machine learning and data engineering
-            expertise with Python, SQL, PyTorch, Docker, and Apache Kafka + Spark.
+            expertise. Core development in Python, with database logic in PostrgreSQL, machine learning through PyTorch
+            and Scikit-Learn, feature engineering and data streaming with Apache Spark and kafka, respectively. Inference
+            run on NVIDIA Triton and ONNX, due to limited maintenance with TorchServe.
         </p>
         <div class="project-meta">
             <div class="meta-item">
@@ -931,7 +933,10 @@
     <section class="content-section">
         <h2 class="section-title">Technical Implementation</h2>
         <p class="section-description">
-            Under Development.
+            Core transaction pattern generation logic that simulates both normal and fraudulent transaction behaviors.
+            The system generates realistic patterns with timing, amounts, and payment methods tailored to each scenario.
+            Below is the core logic of the developed TransactionGenerator class, for full code and documentation, visit
+            my GitHub page.
         </p>
 
         <div class="code-container">
@@ -939,21 +944,93 @@
                 <div class="code-dot"></div>
                 <div class="code-dot"></div>
                 <div class="code-dot"></div>
-                <div class="code-title">fraud_detection_model.py</div>
+                <div class="code-title">transaction_generator.py</div>
             </div>
+            <pre><code><span class="code-keyword">import</span> random
+<span class="code-keyword">from</span> datetime <span class="code-keyword">import</span> datetime, timedelta
+<span class="code-keyword">from</span> dataclasses <span class="code-keyword">import</span> dataclass
 
-            <pre>
-              <code>
-                <span class="code-keyword">import</span> torch
-                <span class="code-keyword">import</span> torch.nn <span class="code-keyword">as</span> nn
-                <br>
-                <span class="code-keyword">class</span> <span class="code-function">FraudDetectionModel</span>(nn.Module):
-                    <span class="code-keyword">def</span> <span class="code-function">__init__</span>(self):
-                <br>
-                    MODEL UNDER CONSTRUCTION
+<span class="code-comment"># Transaction context holds all metadata for a transaction pattern</span>
+<span class="code-keyword">@dataclass</span>
+<span class="code-keyword">class</span> <span class="code-function">TransactionContext</span>:
+    user_id: <span class="code-keyword">int</span>
+    device_id: <span class="code-keyword">int</span>
+    merchant_id: <span class="code-keyword">int</span>
+    currency: <span class="code-keyword">str</span>
+    is_fraudulent: <span class="code-keyword">int</span>
+    fraud_type: <span class="code-keyword">str</span> | <span class="code-keyword">None</span>
+    payment_id: <span class="code-keyword">int</span> | <span class="code-keyword">None</span>
+    transaction_status: <span class="code-keyword">str</span> | <span class="code-keyword">None</span>
 
-              </code>
-            </pre>
+<span class="code-keyword">class</span> <span class="code-function">TransactionGenerator</span>:
+    <span class="code-keyword">def</span> <span class="code-function">__init__</span>(self, conversion_rates, fraud_rate=<span class="code-string">0.01</span>):
+        self.conversion_rates = conversion_rates
+        self.fraud_rate = fraud_rate
+
+    <span class="code-keyword">def</span> <span class="code-function">generate_transaction_pattern</span>(self, user_id, device_id, merchant_id):
+        <span class="code-comment"># Determine if transaction is fraudulent based on fraud_rate</span>
+        is_fraud, fraud_type = self._generate_transaction_type()
+
+        <span class="code-comment"># Create transaction context with metadata</span>
+        context = self._generate_transaction_context(
+            fraud_type, user_id, device_id, merchant_id
+        )
+
+        <span class="code-keyword">if</span> fraud_type == <span class="code-string">"Card Probing"</span>:
+            <span class="code-comment"># Generate multiple small transactions with different cards</span>
+            pattern = []
+            timestamp = datetime.now()
+
+            <span class="code-keyword">for</span> _ <span class="code-keyword">in</span> range(random.randint(<span class="code-string">5</span>, <span class="code-string">15</span>)):
+                <span class="code-comment"># Create new payment method for each attempt</span>
+                context.payment_id = self._create_payment_method(user_id)
+
+                <span class="code-comment"># Small amounts to check card validity, most attempts declined</span>
+                amount = random.uniform(<span class="code-string">1</span>, <span class="code-string">10</span>)
+                context.transaction_status = self._determine_status(
+                    is_fraud=<span class="code-keyword">True</span>, fraud_type=fraud_type
+                )
+
+                <span class="code-comment"># Quick succession (30-90 seconds apart)</span>
+                timestamp += timedelta(seconds=random.uniform(<span class="code-string">30</span>, <span class="code-string">90</span>))
+
+                pattern.append(self._build_transaction(context, amount, timestamp))
+
+            <span class="code-keyword">return</span> pattern
+
+        <span class="code-keyword">elif</span> fraud_type == <span class="code-string">"Botting"</span>:
+            <span class="code-comment"># Rapid repeated purchases with same payment method</span>
+            pattern = []
+            timestamp = datetime.now()
+            context.payment_id = self._get_active_payment_method(user_id)
+            amount = random.uniform(<span class="code-string">10</span>, <span class="code-string">100</span>)
+
+            <span class="code-keyword">for</span> _ <span class="code-keyword">in</span> range(random.randint(<span class="code-string">10</span>, <span class="code-string">50</span>)):
+                <span class="code-comment"># Very fast (0.5-1 second intervals)</span>
+                timestamp += timedelta(seconds=random.uniform(<span class="code-string">0.5</span>, <span class="code-string">1</span>))
+                context.transaction_status = self._determine_status(
+                    is_fraud=<span class="code-keyword">True</span>, fraud_type=fraud_type
+                )
+
+                pattern.append(self._build_transaction(context, amount, timestamp))
+
+            <span class="code-keyword">return</span> pattern
+
+        <span class="code-keyword">else</span>:
+            <span class="code-comment"># Normal transaction: 1-3 successful purchases over time</span>
+            pattern = []
+            timestamp = datetime.now()
+
+            <span class="code-keyword">for</span> _ <span class="code-keyword">in</span> range(random.randint(<span class="code-string">1</span>, <span class="code-string">3</span>)):
+                amount = self._generate_amount_by_distribution()
+                context.transaction_status = self._determine_status(is_fraud=<span class="code-keyword">False</span>)
+
+                <span class="code-comment"># Natural spacing between purchases</span>
+                timestamp += timedelta(seconds=random.uniform(<span class="code-string">300</span>, <span class="code-string">86400</span>))
+
+                pattern.append(self._build_transaction(context, amount, timestamp))
+
+            <span class="code-keyword">return</span> pattern</code></pre>
         </div>
     </section>
 
