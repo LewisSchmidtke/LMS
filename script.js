@@ -1,4 +1,16 @@
 // ============================================
+        // Responsive Viewport Scale
+        // All base values are designed for 2560px.
+        // vScale() gives a multiplier: 1.0 at 2560px, proportionally less below.
+        // ============================================
+        function vScale() {
+            return Math.min(window.innerWidth / 2560, 1);
+        }
+        function vs(baseVal, min) {
+            return Math.max(min || baseVal * 0.35, baseVal * vScale());
+        }
+
+        // ============================================
         // Contact Drop-up Menu
         // ============================================
         const contactBtn = document.getElementById('contactBtn');
@@ -478,15 +490,24 @@
         const techStack = document.getElementById('techStack');
         let techStackAnimated = false;
 
-        const ICON_SIZE = 42;
-        const ICON_GAP = 16;
-        const ICON_STEP = ICON_SIZE + ICON_GAP;
+        function getIconSize() {
+            // Read actual rendered size from CSS clamp(28px, 1.64vw, 42px)
+            const icon = techIcons[0];
+            if (icon) return icon.getBoundingClientRect().width || vs(42, 24);
+            return vs(42, 24);
+        }
+        function getIconGap() {
+            return vs(16, 6);
+        }
 
         function animateTechStack() {
             if (techStackAnimated) return;
             techStackAnimated = true;
 
             const totalIcons = techIcons.length;
+            const ICON_SIZE = getIconSize();
+            const ICON_GAP = getIconGap();
+            const ICON_STEP = ICON_SIZE + ICON_GAP;
             const totalWidth = (totalIcons * ICON_SIZE) + ((totalIcons - 1) * ICON_GAP);
             techStack.style.width = totalWidth + 'px';
 
@@ -753,31 +774,37 @@
             }
         ];
 
-        // Fan layout configs for academic (3 cards)
-        const fanLayout = [
-            { x: -200, r: -8, z: 1 },
-            { x: 0, r: 0, z: 2 },
-            { x: 200, r: 8, z: 1 }
-        ];
+        // Fan layout configs for academic (3 cards) - responsive
+        function getFanLayout() {
+            const s = vScale();
+            return [
+                { x: -200 * s, r: -8, z: 1 },
+                { x: 0, r: 0, z: 2 },
+                { x: 200 * s, r: 8, z: 1 }
+            ];
+        }
 
         // Fan hover shifts - cards move along their fan radius vectors
-        const fanHoverShifts = {
-            0: [ // When left card is hovered
-                { x: -280, r: -8 },   // Left card moves further left/down along its vector
-                { x: 60, r: 0 },      // Center moves right
-                { x: 280, r: 8 }      // Right moves further right/down
-            ],
-            1: [ // When center card is hovered
-                { x: -280, r: -8 },   // Left moves further out
-                { x: 0, r: 0 },       // Center stays (but lifts)
-                { x: 280, r: 8 }      // Right moves further out
-            ],
-            2: [ // When right card is hovered
-                { x: -280, r: -8 },   // Left moves further left/down
-                { x: -60, r: 0 },     // Center moves left
-                { x: 280, r: 8 }      // Right card moves further right/down
-            ]
-        };
+        function getFanHoverShifts() {
+            const s = vScale();
+            return {
+                0: [
+                    { x: -280 * s, r: -8 },
+                    { x: 60 * s, r: 0 },
+                    { x: 280 * s, r: 8 }
+                ],
+                1: [
+                    { x: -280 * s, r: -8 },
+                    { x: 0, r: 0 },
+                    { x: 280 * s, r: 8 }
+                ],
+                2: [
+                    { x: -280 * s, r: -8 },
+                    { x: -60 * s, r: 0 },
+                    { x: 280 * s, r: 8 }
+                ]
+            };
+        }
 
         // State
         let currentCategory = 'industry';
@@ -831,7 +858,7 @@
                         if (currentCategory === 'academic') {
                             // Fan mode: shift cards along their radii, elevate hovered card
                             const hoveredIndex = parseInt(card.dataset.index);
-                            const shifts = fanHoverShifts[hoveredIndex];
+                            const shifts = getFanHoverShifts()[hoveredIndex];
 
                             experienceCards.forEach((c, i) => {
                                 const shift = shifts[i];
@@ -843,7 +870,7 @@
                                     c.style.transform = baseTransform + ' translateY(-15px)';
                                 } else {
                                     // Other cards: maintain original z-index
-                                    const pos = fanLayout[i];
+                                    const pos = getFanLayout()[i];
                                     c.style.zIndex = pos.z;
                                     c.style.transform = baseTransform;
                                 }
@@ -861,7 +888,7 @@
                         if (currentCategory === 'academic') {
                             // Fan mode: return all cards to base positions
                             experienceCards.forEach((c, i) => {
-                                const pos = fanLayout[i];
+                                const pos = getFanLayout()[i];
                                 const baseTransform = `translateX(${pos.x}px) rotate(${pos.r}deg) scale(1)`;
                                 c.style.transform = baseTransform;
                                 c.dataset.baseTransform = baseTransform;
@@ -940,7 +967,7 @@
                     card.style.transition = 'transform 0.1s ease-out, opacity 0.1s ease-out, filter 0.1s ease-out, outline 0.3s ease';
                 }
 
-                const spacing = 380;
+                const spacing = vs(380, 180);
                 const baseX = offset * spacing;
                 const adjustedX = baseX + carouselDragOffset;
 
@@ -973,7 +1000,7 @@
         // Apply fan layout (academic mode)
         function applyFanLayout() {
             experienceCards.forEach((card, i) => {
-                const pos = fanLayout[i];
+                const pos = getFanLayout()[i];
                 card.className = 'experience-card fan';
                 const baseTransform = `translateX(${pos.x}px) rotate(${pos.r}deg) scale(1)`;
                 card.style.transform = baseTransform;
@@ -1011,7 +1038,7 @@
                     card.style.transitionDelay = delay + 's';
 
                     // Each card flies off to the right, progressively further
-                    const flyX = 1500 + (i * 300);
+                    const flyX = vs(1500, 600) + (i * vs(300, 100));
                     const flyR = 45 + (i * 15);
                     card.style.transform = `translateX(${flyX}px) translateY(-100px) rotate(${flyR}deg) scale(0.5)`;
                 });
@@ -1037,7 +1064,7 @@
                         card.style.transitionDelay = delay + 's';
                         card.style.opacity = '1';
 
-                        const pos = fanLayout[i];
+                        const pos = getFanLayout()[i];
                         const baseTransform = `translateX(${pos.x}px) rotate(${pos.r}deg) scale(1)`;
                         card.style.transform = baseTransform;
                         card.dataset.baseTransform = baseTransform;
@@ -1062,7 +1089,7 @@
                     card.style.transitionDelay = delay + 's';
 
                     // Fly off to the left
-                    const flyX = -1500 - (i * 200);
+                    const flyX = -vs(1500, 600) - (i * vs(200, 80));
                     card.style.transform = `translateX(${flyX}px) translateY(-150px) rotate(-40deg) scale(0.5)`;
                 });
 
@@ -1109,7 +1136,7 @@
                                 card.style.opacity = '1';
 
                                 // Calculate final position in carousel
-                                const spacing = 380;
+                                const spacing = vs(380, 180);
                                 const baseX = offset * spacing;
 
                                 let baseTransform = '';
@@ -1299,8 +1326,12 @@
                 expandedCard.classList.add('morphing');
 
                 // Center it
-                const targetW = 680;
-                const targetH = 560;
+                // Read target dimensions from CSS (which uses clamp())
+                const expandedEl = document.querySelector('.expanded-card');
+                expandedEl.classList.add('morphing');
+                const targetW = expandedEl.getBoundingClientRect().width;
+                const targetH = expandedEl.getBoundingClientRect().height;
+                expandedEl.classList.remove('morphing');
                 expandedCard.style.left = ((window.innerWidth - targetW) / 2) + 'px';
                 expandedCard.style.top = ((window.innerHeight - targetH) / 2) + 'px';
                 expandedCard.style.width = targetW + 'px';
@@ -1362,5 +1393,23 @@
             updateOverlayClipPath(currentRotation);
             if (contactDropup.classList.contains('active')) {
                 positionDropup();
+            }
+            // Recalculate responsive positions
+            if (currentCategory === 'academic') {
+                applyFanLayout();
+            } else if (currentCategory === 'industry') {
+                updateCarouselPositions(false);
+            }
+            // Recalculate tech stack sizing
+            if (techStackAnimated && techStack) {
+                const sz = getIconSize();
+                const gp = getIconGap();
+                const step = sz + gp;
+                const total = techIcons.length;
+                techStack.style.width = ((total * sz) + ((total - 1) * gp)) + 'px';
+                techIcons.forEach((icon, i) => {
+                    const slot = total - 1 - i;
+                    icon.style.left = (slot * step) + 'px';
+                });
             }
         });
