@@ -3,15 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>End-to-End Fraud Detection | Lewis M. Schmitke</title>
+    <title>End-to-End Fraud Detection | Lewis M. Schmidtke</title>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
             --black: #000000;
@@ -27,11 +23,11 @@
             --grey-700: #404040;
             --grey-800: #262626;
             --grey-900: #171717;
+            --amber: #f59e0b;
+            --blue: #3b82f6;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: 'Manrope', sans-serif;
@@ -43,670 +39,273 @@
 
         /* Navigation */
         nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: rgba(255, 255, 255, 0.95);
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: rgba(255,255,255,0.95);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--grey-200);
         }
-
         .nav-inner {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 24px 80px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            max-width: 1400px; margin: 0 auto; padding: 24px 80px;
+            display: flex; justify-content: space-between; align-items: center;
         }
-
         .back-btn {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: var(--grey-700);
-            text-decoration: none;
-            transition: color 0.3s ease;
+            display: flex; align-items: center; gap: 8px;
+            font-size: 0.95rem; font-weight: 600; color: var(--grey-700);
+            text-decoration: none; transition: color 0.3s ease;
         }
+        .back-btn:hover { color: var(--green); }
+        .back-btn svg { width: 20px; height: 20px; }
+        .nav-title { font-size: 1.1rem; font-weight: 700; color: var(--black); letter-spacing: -0.02em; }
 
-        .back-btn:hover {
-            color: var(--green);
-        }
-
-        .back-btn svg {
-            width: 20px;
-            height: 20px;
-        }
-
-        .nav-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--black);
-            letter-spacing: -0.02em;
-        }
-
-        /* Hero Section */
-        .hero {
-            padding: 140px 80px 80px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
+        /* Hero */
+        .hero { padding: 140px 80px 80px; max-width: 1400px; margin: 0 auto; }
         .project-label {
-            display: inline-block;
-            padding: 8px 20px;
-            background: var(--green);
-            color: var(--white);
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            border-radius: 50px;
-            margin-bottom: 32px;
+            display: inline-block; padding: 8px 20px; background: var(--green);
+            color: var(--white); font-size: 0.75rem; font-weight: 700;
+            letter-spacing: 0.1em; text-transform: uppercase; border-radius: 50px; margin-bottom: 32px;
         }
+        h1 { font-size: 4.5rem; font-weight: 700; letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 32px; color: var(--black); }
+        .hero-description { font-size: 1.4rem; font-weight: 400; color: var(--grey-600); line-height: 1.7; max-width: 1200px; margin-bottom: 48px; }
+        .project-meta { display: flex; gap: 48px; flex-wrap: wrap; align-items: flex-start; }
+        .meta-item { display: flex; flex-direction: column; gap: 8px; }
+        .meta-label { font-size: 0.75rem; font-weight: 600; color: var(--grey-500); text-transform: uppercase; letter-spacing: 0.1em; }
+        .meta-value { font-size: 1rem; font-weight: 600; color: var(--black); }
 
-        h1 {
-            font-size: 4.5rem;
-            font-weight: 700;
-            letter-spacing: -0.04em;
-            line-height: 1.1;
-            margin-bottom: 32px;
-            color: var(--black);
+        /* Status badge */
+        .status-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 6px 14px; border-radius: 50px; font-size: 0.8rem; font-weight: 700;
         }
+        .status-badge.in-progress { background: rgba(245,158,11,0.12); color: var(--amber); border: 1px solid rgba(245,158,11,0.3); }
+        .status-dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; animation: pulse 1.8s infinite; }
+        @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
 
-        .hero-description {
-            font-size: 1.4rem;
-            font-weight: 400;
-            color: var(--grey-600);
-            line-height: 1.7;
-            max-width: 1200px;
-            margin-bottom: 48px;
-        }
-
-        .project-meta {
-            display: flex;
-            gap: 48px;
-            flex-wrap: wrap;
-        }
-
-        .meta-item {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .meta-label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--grey-500);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-
-        .meta-value {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--black);
-        }
-
-        /* Content Sections */
-        .content-section {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 80px 80px;
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 16px;
-        }
-
+        /* Sections */
+        .content-section { max-width: 1400px; margin: 0 auto; padding: 80px; }
+        .section-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
         .section-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            letter-spacing: -0.03em;
-            color: var(--black);
-            position: relative;
-            display: inline-block;
+            font-size: 2.5rem; font-weight: 700; letter-spacing: -0.03em; color: var(--black);
+            position: relative; display: inline-block;
         }
-
         .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 0;
-            width: 60px;
-            height: 4px;
-            background: var(--green);
-            border-radius: 2px;
+            content: ''; position: absolute; bottom: -8px; left: 0;
+            width: 60px; height: 4px; background: var(--green); border-radius: 2px;
         }
+        .section-title-white { color: var(--white); }
+        .section-title-white::after { background: var(--white); }
 
-        .section-title-white {
-            color: var(--white);
+        /* Toggle Switch */
+        .toggle-wrapper {
+            display: flex; align-items: center; gap: 14px;
+            cursor: pointer; user-select: none; -webkit-user-select: none;
         }
-
-        .section-title-white::after {
-            background: var(--white);
+        .toggle-label {
+            font-family: 'Manrope', sans-serif; font-size: 0.95rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.05em; color: var(--black);
+            transition: color 0.3s ease; white-space: nowrap;
         }
-
-        .view-button {
-            padding: 12px 32px;
-            background: var(--green);
-            color: var(--black);
-            border: none;
-            border-radius: 50px;
-            font-family: 'Manrope', sans-serif;
-            font-size: 0.95rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            user-select: none;
-            -webkit-user-select: none;
+        .toggle-switch {
+            position: relative; width: 64px; height: 32px; background: var(--grey-300);
+            border-radius: 50px; flex-shrink: 0;
+            transition: background 0.4s cubic-bezier(0.4,0,0.2,1), box-shadow 0.3s ease;
         }
-
-        .view-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 232, 66, 0.3);
+        .toggle-switch.active { background: var(--green); box-shadow: 0 0 0 4px rgba(0,232,66,0.15); }
+        .toggle-knob {
+            position: absolute; top: 4px; left: 4px; width: 24px; height: 24px;
+            background: white; border-radius: 50%; box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease;
         }
+        .toggle-switch.active .toggle-knob { transform: translateX(32px); box-shadow: 0 2px 10px rgba(0,232,66,0.5); }
+        .toggle-wrapper:hover .toggle-switch:not(.active) { background: var(--grey-400); }
+        .toggle-wrapper:hover .toggle-knob { box-shadow: 0 2px 14px rgba(0,0,0,0.28); }
 
-        .view-button:active {
-            transform: translateY(0);
-            box-shadow: 0 4px 12px rgba(0, 232, 66, 0.3);
-        }
+        .section-description { font-size: 1.15rem; color: var(--grey-600); line-height: 1.8; margin-top: 32px; max-width: 900px; }
+        .section-description-white { color: rgba(255,255,255,0.8); }
 
-        .section-description {
-            font-size: 1.15rem;
-            color: var(--grey-600);
-            line-height: 1.8;
-            margin-top: 32px;
-            max-width: 900px;
-        }
-
-        .section-description-white {
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        /* Architecture Diagram */
+        /* Architecture */
         .architecture-container {
-            background: var(--grey-50);
-            border-radius: 24px;
-            padding: 60px;
-            margin-top: 48px;
-            border: 1px solid var(--grey-200);
-            position: relative;
-            overflow: hidden;
+            background: var(--grey-50); border-radius: 24px; padding: 60px; margin-top: 48px;
+            border: 1px solid var(--grey-200); position: relative; overflow: hidden;
         }
-
         .architecture-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('images/system_architecture.png');
-            background-size: contain;
-            background-position: center;
-            background-repeat: no-repeat;
-            filter: grayscale(100%);
-            opacity: 0.15;
+            background-size: contain; background-position: center; background-repeat: no-repeat;
+            filter: grayscale(100%); opacity: 0.15;
             transition: filter 0.5s ease, opacity 0.5s ease;
-            pointer-events: none;
-            z-index: 1;
+            pointer-events: none; z-index: 1;
         }
-
-        .architecture-background.revealed {
-            filter: grayscale(0%);
-            opacity: 1;
-        }
-
+        .architecture-background.revealed { filter: grayscale(0%); opacity: 1; }
         .architecture-flow {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 32px;
-            margin-top: 40px;
-            position: relative;
-            z-index: 2;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 32px; margin-top: 40px; position: relative; z-index: 2;
             transition: opacity 0.5s ease, transform 0.5s ease;
         }
-
-        .architecture-flow.hidden {
-            opacity: 0;
-            transform: scale(0.95);
-            pointer-events: none;
-        }
-
+        .architecture-flow.hidden { opacity: 0; transform: scale(0.95); pointer-events: none; }
         .flow-item {
-            background: var(--white);
-            border-radius: 16px;
-            padding: 32px 24px;
-            border: 2px solid var(--grey-200);
-            transition: all 0.3s ease, opacity 0.5s ease, transform 0.5s ease;
-            position: relative;
+            background: var(--white); border-radius: 16px; padding: 32px 24px;
+            border: 2px solid var(--grey-200); transition: all 0.3s ease; position: relative;
         }
-
-        .flow-item:hover {
-            border-color: var(--green);
-            transform: translateY(-4px);
-            box-shadow: 0 12px 32px rgba(0, 232, 66, 0.15);
-        }
-
+        .flow-item:hover { border-color: var(--green); transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,232,66,0.15); }
         .flow-number {
-            position: absolute;
-            top: -16px;
-            left: 24px;
-            width: 32px;
-            height: 32px;
-            background: var(--green);
-            color: var(--white);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 0.9rem;
+            position: absolute; top: -16px; left: 24px; width: 32px; height: 32px;
+            background: var(--green); color: var(--white); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem;
         }
-
-        .flow-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--black);
-            margin-bottom: 12px;
-            margin-top: 8px;
+        .flow-title { font-size: 1.1rem; font-weight: 700; color: var(--black); margin-bottom: 12px; margin-top: 8px; }
+        .flow-description { font-size: 0.95rem; color: var(--grey-600); line-height: 1.6; }
+        .flow-status {
+            display: inline-flex; align-items: center; gap: 5px; margin-top: 10px;
+            font-size: 0.75rem; font-weight: 700; padding: 3px 10px; border-radius: 20px;
         }
+        .flow-status.done { background: rgba(0,232,66,0.1); color: #059669; border: 1px solid rgba(0,232,66,0.25); }
+        .flow-status.wip  { background: rgba(245,158,11,0.1); color: var(--amber); border: 1px solid rgba(245,158,11,0.25); }
+        .flow-status.planned { background: rgba(59,130,246,0.1); color: var(--blue); border: 1px solid rgba(59,130,246,0.25); }
 
-        .flow-description {
-            font-size: 0.95rem;
-            color: var(--grey-600);
-            line-height: 1.6;
-        }
-
-        /* Tech Stack Grid */
-        .tech-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 24px;
-            margin-top: 48px;
-        }
-
-        .tech-card {
-            background: var(--white);
-            border: 2px solid var(--grey-200);
-            border-radius: 16px;
-            padding: 24px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .tech-card:hover {
-            border-color: var(--green);
-            transform: translateY(-4px);
-            box-shadow: 0 12px 32px rgba(0, 232, 66, 0.1);
-        }
-
-        .tech-icon {
-            width: 60px;
-            height: 60px;
-            margin: 0 auto 16px;
-            background: var(--grey-100);
+        /* Status table */
+        .status-table-wrapper {
+            margin-top: 48px; border-radius: 20px; overflow: hidden;
             border: 1px solid var(--grey-200);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--grey-600);
-            transition: all 0.25s ease;
         }
-
-        .tech-card:hover .tech-icon {
-            background: var(--green);
-            border-color: var(--green);
-            color: var(--black);
+        .status-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+        .status-table thead { background: var(--grey-900); }
+        .status-table thead th { padding: 16px 24px; color: var(--grey-300); font-weight: 600; text-align: left; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; }
+        .status-table tbody tr { border-bottom: 1px solid var(--grey-200); transition: background 0.2s; }
+        .status-table tbody tr:last-child { border-bottom: none; }
+        .status-table tbody tr:hover { background: var(--grey-50); }
+        .status-table td { padding: 14px 24px; color: var(--grey-700); }
+        .status-table td:first-child { font-weight: 600; color: var(--black); }
+        .pill {
+            display: inline-flex; align-items: center; gap: 5px;
+            padding: 4px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 700;
         }
+        .pill.done     { background: rgba(0,232,66,0.1);    color: #059669; border: 1px solid rgba(0,232,66,0.25); }
+        .pill.wip      { background: rgba(245,158,11,0.1);  color: var(--amber); border: 1px solid rgba(245,158,11,0.25); }
+        .pill.planned  { background: rgba(59,130,246,0.1);  color: var(--blue);  border: 1px solid rgba(59,130,246,0.25); }
 
-        .tech-icon img {
-            width: 24px;
-            height: 24px;
-            object-fit: contain;
+        /* Tech Grid */
+        .tech-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 24px; margin-top: 48px; }
+        .tech-card {
+            background: var(--white); border: 2px solid var(--grey-200); border-radius: 16px;
+            padding: 24px; text-align: center; transition: all 0.3s ease;
         }
-
-        .tech-name {
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: var(--black);
+        .tech-card:hover { border-color: var(--green); transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,232,66,0.1); }
+        .tech-icon {
+            width: 60px; height: 60px; margin: 0 auto 16px;
+            background: var(--grey-100); border: 1px solid var(--grey-200); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--grey-600); transition: all 0.25s ease;
         }
+        .tech-card:hover .tech-icon { background: var(--green); border-color: var(--green); color: var(--black); }
+        .tech-icon img { width: 24px; height: 24px; object-fit: contain; }
+        .tech-name { font-size: 0.95rem; font-weight: 600; color: var(--black); }
 
-        /* Features Section - Green Background */
-        .features-section {
-            background: var(--green);
-            padding: 80px;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 32px;
-            margin-top: 48px;
-        }
-
+        /* Features */
+        .features-section { background: var(--green); padding: 80px; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; margin-top: 48px; }
         .feature-card {
-            background: var(--black);
-            border-radius: 20px;
-            padding: 40px 32px;
-            border: 2px solid var(--black);
-            transition: all 0.3s ease;
-            position: relative;
+            background: var(--black); border-radius: 20px; padding: 40px 32px;
+            border: 2px solid var(--black); transition: all 0.3s ease; position: relative;
         }
-
-        .feature-card:hover {
-            border-color: var(--white);
-            transform: translateY(-4px);
-            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
-        }
-
+        .feature-card:hover { border-color: var(--white); transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.3); }
         .feature-number {
-            position: absolute;
-            top: -16px;
-            left: 32px;
-            width: 48px;
-            height: 48px;
-            background: var(--white);
-            color: var(--black);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 1.3rem;
+            position: absolute; top: -16px; left: 32px; width: 48px; height: 48px;
+            background: var(--white); color: var(--black); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.3rem;
         }
-
-        .feature-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--white);
-            margin-bottom: 12px;
-            margin-top: 16px;
+        .feature-title { font-size: 1.3rem; font-weight: 700; color: var(--white); margin-bottom: 12px; margin-top: 16px; }
+        .feature-description { font-size: 1rem; color: rgba(255,255,255,0.8); line-height: 1.7; }
+        .feature-tag {
+            display: inline-block; margin-top: 12px; padding: 3px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 700;
         }
-
-        .feature-description {
-            font-size: 1rem;
-            color: rgba(255, 255, 255, 0.8);
-            line-height: 1.7;
-        }
+        .feature-tag.done    { background: rgba(0,232,66,0.2);   color: #4ade80; }
+        .feature-tag.wip     { background: rgba(245,158,11,0.2); color: var(--amber); }
+        .feature-tag.planned { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.6); }
 
         /* Code Block */
         .code-container {
-            background: var(--grey-900);
-            border-radius: 20px;
-            padding: 40px;
-            margin-top: 48px;
-            overflow-x: auto;
-            border: 1px solid var(--grey-800);
+            background: var(--grey-900); border-radius: 20px; padding: 40px; margin-top: 48px;
+            overflow-x: auto; border: 1px solid var(--grey-800);
         }
-
-        .code-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 24px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--grey-700);
-        }
-
-        .code-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
-
+        .code-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid var(--grey-700); }
+        .code-dot { width: 12px; height: 12px; border-radius: 50%; }
         .code-dot:nth-child(1) { background: #ff5f56; }
         .code-dot:nth-child(2) { background: #ffbd2e; }
         .code-dot:nth-child(3) { background: #27c93f; }
-
-        .code-title {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.9rem;
-            color: var(--grey-400);
-            margin-left: 8px;
-        }
-
-        pre {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.9rem;
-            line-height: 1.8;
-            color: var(--grey-300);
-            overflow-x: auto;
-        }
-
+        .code-title { font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: var(--grey-400); margin-left: 8px; }
+        pre { font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; line-height: 1.8; color: var(--grey-300); overflow-x: auto; }
         .code-keyword { color: #ff79c6; }
         .code-function { color: #50fa7b; }
         .code-string { color: #f1fa8c; }
         .code-comment { color: var(--grey-500); font-style: italic; }
 
-        /* Challenges Section */
-        .challenge-list {
-            margin-top: 48px;
-        }
+        /* Fraud patterns table */
+        .fraud-table-wrapper { margin-top: 40px; border-radius: 16px; overflow: hidden; border: 1px solid var(--grey-200); }
+        .fraud-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+        .fraud-table thead { background: var(--grey-900); }
+        .fraud-table thead th { padding: 14px 20px; color: var(--grey-300); font-weight: 600; text-align: left; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; }
+        .fraud-table tbody tr { border-bottom: 1px solid var(--grey-200); transition: background 0.2s; }
+        .fraud-table tbody tr:last-child { border-bottom: none; }
+        .fraud-table tbody tr:hover { background: var(--grey-50); }
+        .fraud-table td { padding: 14px 20px; color: var(--grey-700); vertical-align: top; }
+        .fraud-table td:first-child { font-weight: 700; color: var(--black); }
 
+        /* Challenges */
+        .challenge-list { margin-top: 48px; }
         .challenge-item {
-            background: var(--white);
-            border-left: 4px solid var(--green);
-            border-radius: 12px;
-            padding: 32px;
-            margin-bottom: 24px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
-            transition: all 0.3s ease;
+            background: var(--white); border-left: 4px solid var(--green); border-radius: 12px;
+            padding: 32px; margin-bottom: 24px; box-shadow: 0 4px 16px rgba(0,0,0,0.04); transition: all 0.3s ease;
         }
+        .challenge-item:hover { transform: translateX(8px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+        .challenge-title { font-size: 1.2rem; font-weight: 700; color: var(--black); margin-bottom: 12px; display: flex; align-items: center; gap: 12px; }
+        .challenge-icon { width: 8px; height: 8px; background: var(--green); border-radius: 50%; flex-shrink: 0; }
+        .challenge-description { font-size: 1rem; color: var(--grey-600); line-height: 1.7; margin-left: 20px; }
 
-        .challenge-item:hover {
-            transform: translateX(8px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-        }
+        /* Feature engineering table */
+        .feat-table-wrapper { margin-top: 40px; border-radius: 16px; overflow: hidden; border: 1px solid var(--grey-200); }
+        .feat-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+        .feat-table thead { background: var(--grey-900); }
+        .feat-table thead th { padding: 14px 20px; color: var(--grey-300); font-weight: 600; text-align: left; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; }
+        .feat-table tbody tr { border-bottom: 1px solid var(--grey-200); transition: background 0.2s; }
+        .feat-table tbody tr:last-child { border-bottom: none; }
+        .feat-table tbody tr:hover { background: var(--grey-50); }
+        .feat-table td { padding: 14px 20px; color: var(--grey-700); vertical-align: top; }
+        .feat-table td:first-child { font-weight: 700; color: var(--black); white-space: nowrap; }
+        .feat-mono { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--green); background: var(--grey-900); padding: 1px 6px; border-radius: 4px; display: inline-block; margin: 2px 2px 2px 0; }
 
-        .challenge-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--black);
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .challenge-icon {
-            width: 8px;
-            height: 8px;
-            background: var(--green);
-            border-radius: 50%;
-        }
-
-        .challenge-description {
-            font-size: 1rem;
-            color: var(--grey-600);
-            line-height: 1.7;
-            margin-left: 20px;
-        }
-
-        /* Results/Impact */
-        .impact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 32px;
-            margin-top: 48px;
-        }
-
-        .impact-card {
-            text-align: center;
-            padding: 40px 32px;
-            background: var(--grey-50);
-            border-radius: 20px;
-            border: 1px solid var(--grey-200);
-            transition: all 0.3s ease;
-        }
-
-        .impact-card:hover {
-            background: var(--white);
-            border-color: var(--green);
-            transform: translateY(-4px);
-        }
-
-        .impact-number {
-            font-size: 3.5rem;
-            font-weight: 800;
-            color: var(--green);
-            line-height: 1;
-            margin-bottom: 16px;
-        }
-
-        .impact-label {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--black);
-            margin-bottom: 8px;
-        }
-
-        .impact-description {
-            font-size: 0.95rem;
-            color: var(--grey-600);
-            line-height: 1.6;
-        }
-
-        /* Footer CTA */
-        .footer-cta {
-            background: var(--black);
-            color: var(--white);
-            padding: 100px 80px;
-            text-align: center;
-        }
-
-        .cta-title {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 24px;
-            letter-spacing: -0.03em;
-        }
-
-        .cta-description {
-            font-size: 1.2rem;
-            color: var(--grey-400);
-            margin-bottom: 40px;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 16px 40px;
-            border-radius: 50px;
-            font-family: 'Manrope', sans-serif;
-            font-size: 1rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            display: inline-block;
-        }
-
-        .btn-primary {
-            background: var(--green);
-            color: var(--black);
-            border: 2px solid var(--green);
-        }
-
-        .btn-primary:hover {
-            background: transparent;
-            color: var(--green);
-            transform: translateY(-2px);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--white);
-            border: 2px solid var(--white);
-        }
-
-        .btn-secondary:hover {
-            background: var(--white);
-            color: var(--black);
-            transform: translateY(-2px);
-        }
+        /* Footer */
+        .footer-cta { background: var(--black); color: var(--white); padding: 100px 80px; text-align: center; }
+        .cta-title { font-size: 3rem; font-weight: 700; margin-bottom: 24px; letter-spacing: -0.03em; }
+        .cta-buttons { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+        .btn { padding: 16px 40px; border-radius: 50px; font-family: 'Manrope', sans-serif; font-size: 1rem; font-weight: 600; text-decoration: none; transition: all 0.3s ease; display: inline-block; }
+        .btn-primary { background: var(--green); color: var(--black); border: 2px solid var(--green); }
+        .btn-primary:hover { background: transparent; color: var(--green); transform: translateY(-2px); }
+        .btn-secondary { background: transparent; color: var(--white); border: 2px solid var(--white); }
+        .btn-secondary:hover { background: var(--white); color: var(--black); transform: translateY(-2px); }
 
         /* Responsive */
         @media (max-width: 1024px) {
-            .nav-inner, .hero, .content-section, .features-section {
-                padding-left: 40px;
-                padding-right: 40px;
-            }
-
-            h1 {
-                font-size: 3.5rem;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
+            .nav-inner, .hero, .content-section, .features-section { padding-left: 40px; padding-right: 40px; }
+            h1 { font-size: 3.5rem; }
+            .section-title { font-size: 2rem; }
         }
-
         @media (max-width: 768px) {
-            .nav-inner, .hero, .content-section, .features-section {
-                padding-left: 24px;
-                padding-right: 24px;
-            }
-
-            h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero-description {
-                font-size: 1.1rem;
-            }
-
-            .architecture-container {
-                padding: 32px 24px;
-            }
-
-            .architecture-flow {
-                grid-template-columns: 1fr;
-            }
-
-            .section-header {
-                flex-direction: column;
-                gap: 16px;
-                align-items: flex-start;
-            }
-
-            .footer-cta {
-                padding: 60px 24px;
-            }
-
-            .cta-title {
-                font-size: 2rem;
-            }
-
-            .cta-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .btn {
-                width: 100%;
-                max-width: 300px;
-            }
+            .nav-inner, .hero, .content-section, .features-section { padding-left: 24px; padding-right: 24px; }
+            h1 { font-size: 2.5rem; }
+            .hero-description { font-size: 1.1rem; }
+            .architecture-container { padding: 32px 24px; }
+            .architecture-flow { grid-template-columns: 1fr; }
+            .section-header { flex-direction: column; gap: 16px; align-items: flex-start; }
+            .footer-cta { padding: 60px 24px; }
+            .cta-title { font-size: 2rem; }
+            .cta-buttons { flex-direction: column; align-items: center; }
+            .btn { width: 100%; max-width: 300px; }
+            .fraud-table, .feat-table, .status-table { font-size: 0.8rem; }
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
+
     <nav>
         <div class="nav-inner">
             <a href="index.html" class="back-btn">
@@ -719,35 +318,45 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero -->
     <section class="hero">
         <span class="project-label">Machine Learning • Data Engineering</span>
         <h1>End-to-End Fraud Detection Pipeline</h1>
         <p class="hero-description">
-            A comprehensive fraud detection system built from scratch, featuring real-time transaction processing,
-            custom ML models, and a complete data pipeline. The project demonstrates machine learning and data engineering
-            expertise. Core development in Python, with database logic in PostrgreSQL, machine learning through PyTorch
-            and Scikit-Learn, feature engineering and data streaming with Apache Spark and kafka, respectively. Inference
-            run on NVIDIA Triton and ONNX, due to limited maintenance with TorchServe.
+            A comprehensive fraud detection system built from scratch — spanning synthetic data generation,
+            relational storage, distributed feature engineering, and ML model training. Core development in Python,
+            with PostgreSQL for storage, Apache Kafka and Apache Spark for ingestion and feature engineering,
+            and PyTorch / Scikit-Learn for modelling. Inference via NVIDIA Triton and ONNX.
         </p>
         <div class="project-meta">
             <div class="meta-item">
                 <span class="meta-label">Status</span>
-                <span class="meta-value">Under Development</span>
+                <span class="status-badge in-progress"><span class="status-dot"></span>Active Development</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Stack</span>
+                <span class="meta-value">Python · PostgreSQL · Spark · Kafka · PyTorch</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Inference</span>
+                <span class="meta-value">NVIDIA Triton · ONNX</span>
             </div>
         </div>
     </section>
 
-    <!-- Overview Section -->
+    <!-- System Architecture -->
     <section class="content-section" style="background: var(--grey-50); border-top: 1px solid var(--grey-200); border-bottom: 1px solid var(--grey-200);">
         <div class="section-header">
             <h2 class="section-title">System Architecture</h2>
-            <button class="view-button" id="viewButton">Hold to View</button>
+            <div class="toggle-wrapper" id="viewButton">
+                <span class="toggle-label" id="toggleLabel">View Architecture</span>
+                <div class="toggle-switch" id="toggleSwitch">
+                    <div class="toggle-knob"></div>
+                </div>
+            </div>
         </div>
         <p class="section-description">
-            This project tackles the critical challenge of real-time fraud detection in financial transactions.
-            Built as an end-to-end solution, it includes data generation, streaming ingestion, feature engineering,
-            model training and real-time inference.
+            A six-stage pipeline covering the full lifecycle from raw data creation through to real-time model inference.
         </p>
 
         <div class="architecture-container">
@@ -755,37 +364,68 @@
             <div class="architecture-flow" id="archFlow">
                 <div class="flow-item">
                     <div class="flow-number">1</div>
-                    <div class="flow-title">Data Generation</div>
-                    <div class="flow-description">Custom synthetic transaction generator able to generate normal and
-                      fraudulent purchasing patterns.</div>
+                    <div class="flow-title">Synthetic Data Generation</div>
+                    <div class="flow-description">Four generator classes (User, Device, PaymentMethod, Merchant) create realistic entities using weighted distributions via Faker. TransactionGenerator produces both normal and fraudulent chronological patterns.</div>
+                    <span class="flow-status done">✓ Complete</span>
                 </div>
                 <div class="flow-item">
-                      <div class="flow-number">2</div>
-                      <div class="flow-title">Storage</div>
-                      <div class="flow-description">Relational database architecture for user, device, payment method,
-                        transaction and merchant relations.</div>
-                  </div>
+                    <div class="flow-number">2</div>
+                    <div class="flow-title">PostgreSQL Storage</div>
+                    <div class="flow-description">Relational schema covering users, devices, payment methods, merchants, and transactions. DatabaseManager handles all CRUD via psycopg2. Containerised with Docker Compose.</div>
+                    <span class="flow-status done">✓ Complete</span>
+                </div>
                 <div class="flow-item">
                     <div class="flow-number">3</div>
-                    <div class="flow-title">Stream Processing</div>
-                    <div class="flow-description">Apache Kafka for real-time data ingestion.</div>
+                    <div class="flow-title">Kafka Streaming</div>
+                    <div class="flow-description">Apache Kafka for real-time transaction ingestion, enabling low-latency streaming between the data layer and feature engineering.</div>
+                    <span class="flow-status planned">↗ Planned</span>
                 </div>
                 <div class="flow-item">
                     <div class="flow-number">4</div>
-                    <div class="flow-title">Feature Engineering</div>
-                    <div class="flow-description">Feature Engineering using Apache Spark to analyze windowed features.</div>
+                    <div class="flow-title">Spark Feature Engineering</div>
+                    <div class="flow-description">PySpark window functions compute velocity, amount, behavioural, and device features across multiple time windows (5min, 1h, 24h, 7d, 30d). Output written to Parquet.</div>
+                    <span class="flow-status done">✓ Complete</span>
                 </div>
                 <div class="flow-item">
                     <div class="flow-number">5</div>
-                    <div class="flow-title">ML Model</div>
-                    <div class="flow-description">Custom PyTorch model</div>
+                    <div class="flow-title">ML Model Training</div>
+                    <div class="flow-description">XGBoost and Random Forest classifiers available, both with SMOTE or class-weight imbalance handling. Custom FraudNet in PyTorch under active development.</div>
+                    <span class="flow-status wip">⚙ In Progress</span>
                 </div>
                 <div class="flow-item">
                     <div class="flow-number">6</div>
-                    <div class="flow-title">Inference</div>
-                    <div class="flow-description">NVIDIA Triton inference server for real-time predictions</div>
+                    <div class="flow-title">Triton Inference</div>
+                    <div class="flow-description">ONNX export plus NVIDIA Triton server for production-grade real-time inference with low latency and model versioning.</div>
+                    <span class="flow-status planned">↗ Planned</span>
                 </div>
             </div>
+        </div>
+
+        <!-- Overall status table -->
+        <div class="status-table-wrapper" style="margin-top: 48px;">
+            <table class="status-table">
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Synthetic data generation</td><td><span class="pill done">✓ Complete</span></td></tr>
+                    <tr><td>PostgreSQL schema &amp; integration</td><td><span class="pill done">✓ Complete</span></td></tr>
+                    <tr><td>Normal transaction patterns</td><td><span class="pill done">✓ Complete</span></td></tr>
+                    <tr><td>Card Probing fraud pattern</td><td><span class="pill done">✓ Complete</span></td></tr>
+                    <tr><td>Botting fraud pattern</td><td><span class="pill done">✓ Complete</span></td></tr>
+                    <tr><td>Spark feature engineering</td><td><span class="pill done">✓ Complete</span></td></tr>
+                    <tr><td>PyTorch custom model (FraudNet)</td><td><span class="pill done">✓ Complete</span></td></tr>
+                    <tr><td>Model training</td><td><span class="pill wip">⚙ In Progress</span></td></tr>
+                    <tr><td>Kafka data streaming</td><td><span class="pill planned">⚙ In Progress</span></td></tr>
+                    <tr><td>ONNX export &amp; Triton inference</td><td><span class="pill planned">⚙ In Progress</span></td></tr>
+                    <tr><td>Card Cracking fraud pattern</td><td><span class="pill planned">↗ Planned</span></td></tr>
+                    <tr><td>Account Takeover fraud pattern</td><td><span class="pill planned">↗ Planned</span></td></tr>
+                    <tr><td>Merchant Switching fraud pattern</td><td><span class="pill planned">↗ Planned</span></td></tr>
+                </tbody>
+            </table>
         </div>
     </section>
 
@@ -793,164 +433,89 @@
     <section class="content-section">
         <h2 class="section-title">Technology Stack</h2>
         <p class="section-description">
-            The project leverages a modern machine learning and data engineering stack for performance, scalability and
-          development efficiency.
+            A modern data-engineering and ML stack chosen for scalability, performance, and production readiness.
         </p>
-
         <div class="tech-grid">
-            <div class="tech-card">
-                <div class="tech-icon">
-                    <img src="images/tech-icons/python-icon.png" alt="Python">
-                </div>
-                <div class="tech-name">Python</div>
-            </div>
-            <div class="tech-card">
-                <div class="tech-icon">
-                    <img src="images/tech-icons/pytorch-icon.png" alt="PyTorch">
-                </div>
-                <div class="tech-name">PyTorch</div>
-            </div>
-            <div class="tech-card">
-                <div class="tech-icon">
-                    <img src="images/tech-icons/spark-icon.png" alt="Apache Spark">
-                </div>
-                <div class="tech-name">Apache Spark</div>
-            </div>
-            <div class="tech-card">
-                <div class="tech-icon">
-                    <img src="images/tech-icons/pandas-icon.png" alt="Pandas">
-                </div>
-                <div class="tech-name">Pandas</div>
-            </div>
-            <div class="tech-card">
-                <div class="tech-icon">
-                    <img src="images/tech-icons/postgresql-icon.png" alt="PostgreSQL">
-                </div>
-                <div class="tech-name">PostgreSQL</div>
-            </div>
-            <div class="tech-card">
-                <div class="tech-icon">
-                    <img src="images/tech-icons/ER-api-icon.png" alt="ExchangeRate API">
-                </div>
-                <div class="tech-name">ExchangeRate API</div>
-            </div>
-            <div class="tech-card">
-                <div class="tech-icon">
-                    <img src="images/tech-icons/docker-icon.png" alt="Docker">
-                </div>
-                <div class="tech-name">Docker</div>
-            </div>
-            <div class="tech-card">
-                <div class="tech-icon">
-                    <img src="images/tech-icons/kafka-icon.png" alt="Apache Kafka">
-                </div>
-                <div class="tech-name">Apache Kafka</div>
-            </div>
-            <div class="tech-card">
-                <div class="tech-icon">
-                    <img src="images/tech-icons/triton-icon.png" alt="NVIDIA Triton">
-                </div>
-                <div class="tech-name">NVIDIA Triton</div>
-            </div>
-            <div class="tech-card">
-                <div class="tech-icon">
-                    <img src="images/tech-icons/scikit-learn-icon.png" alt="Scikit-learn">
-                </div>
-                <div class="tech-name">Scikit-learn</div>
-            </div>
-            <div class="tech-card">
-                <div class="tech-icon">
-                    <img src="images/tech-icons/matplotlib-icon.png" alt="Matplotlib">
-                </div>
-                <div class="tech-name">Matplotlib</div>
-            </div>
-            <div class="tech-card">
-                <div class="tech-icon">
-                    <img src="images/tech-icons/seaborn-icon.png" alt="Seaborn">
-                </div>
-                <div class="tech-name">Seaborn</div>
-            </div>
+            <div class="tech-card"><div class="tech-icon"><img src="images/tech-icons/python-icon.png" alt="Python"></div><div class="tech-name">Python</div></div>
+            <div class="tech-card"><div class="tech-icon"><img src="images/tech-icons/pytorch-icon.png" alt="PyTorch"></div><div class="tech-name">PyTorch</div></div>
+            <div class="tech-card"><div class="tech-icon"><img src="images/tech-icons/spark-icon.png" alt="Apache Spark"></div><div class="tech-name">Apache Spark</div></div>
+            <div class="tech-card"><div class="tech-icon"><img src="images/tech-icons/pandas-icon.png" alt="Pandas"></div><div class="tech-name">Pandas</div></div>
+            <div class="tech-card"><div class="tech-icon"><img src="images/tech-icons/postgresql-icon.png" alt="PostgreSQL"></div><div class="tech-name">PostgreSQL</div></div>
+            <div class="tech-card"><div class="tech-icon"><img src="images/tech-icons/ER-api-icon.png" alt="ExchangeRate API"></div><div class="tech-name">ExchangeRate API</div></div>
+            <div class="tech-card"><div class="tech-icon"><img src="images/tech-icons/docker-icon.png" alt="Docker"></div><div class="tech-name">Docker</div></div>
+            <div class="tech-card"><div class="tech-icon"><img src="images/tech-icons/kafka-icon.png" alt="Apache Kafka"></div><div class="tech-name">Apache Kafka</div></div>
+            <div class="tech-card"><div class="tech-icon"><img src="images/tech-icons/triton-icon.png" alt="NVIDIA Triton"></div><div class="tech-name">NVIDIA Triton</div></div>
+            <div class="tech-card"><div class="tech-icon"><img src="images/tech-icons/scikit-learn-icon.png" alt="Scikit-learn"></div><div class="tech-name">Scikit-learn</div></div>
+            <div class="tech-card"><div class="tech-icon"><img src="images/tech-icons/matplotlib-icon.png" alt="Matplotlib"></div><div class="tech-name">Matplotlib</div></div>
+            <div class="tech-card"><div class="tech-icon"><img src="images/tech-icons/seaborn-icon.png" alt="Seaborn"></div><div class="tech-name">Seaborn</div></div>
         </div>
     </section>
 
-    <!-- Key Features - Green Background -->
+    <!-- Key Features -->
     <section class="features-section">
         <h2 class="section-title section-title-white">Key Features</h2>
         <p class="section-description section-description-white">
-            The system incorporates advanced techniques and best practices from both machine learning and
-            data engineering domains.
+            Implemented components across synthetic data, storage, feature engineering, and ML modelling.
         </p>
-
         <div class="features-grid">
             <div class="feature-card">
                 <div class="feature-number">01</div>
                 <div class="feature-title">Synthetic Data Generation</div>
-                <div class="feature-description">
-                    Built custom data generators that create realistic transaction patterns with configurable fraud
-                    scenarios. Includes temporal patterns, user behavior simulation, and merchant relationships.
-                </div>
+                <div class="feature-description">Four generator classes (User, Device, PaymentMethod, Merchant) with configurable weighted distributions. Default run: 50 merchants, 250 users, 3–12 patterns each, with live currency conversion via ExchangeRate API.</div>
+                <span class="feature-tag done">✓ Complete</span>
             </div>
             <div class="feature-card">
                 <div class="feature-number">02</div>
-                <div class="feature-title">Deep Learning Model</div>
-                <div class="feature-description">
-                    Custom PyTorch Model, currently under development.
-                </div>
+                <div class="feature-title">Fraud Pattern Engine</div>
+                <div class="feature-description">Card Probing (3–15 small, mostly-declined transactions, 30–90s intervals, 10% approval) and Botting (1–10 rapid repeats, 0.5–1s intervals, 90% approval) are fully implemented. Card Cracking, Account Takeover and Merchant Switching are planned.</div>
+                <span class="feature-tag done">✓ 2/5 Patterns</span>
             </div>
             <div class="feature-card">
                 <div class="feature-number">03</div>
-                <div class="feature-title">Real-Time Processing</div>
-                <div class="feature-description">
-                    Low latency inference with distributed processing capabilities.
-                </div>
+                <div class="feature-title">Spark Feature Engineering</div>
+                <div class="feature-description">16+ features across four groups — Velocity, Amount, Behavioural, and Device/Payment — computed via PySpark window functions over 5min, 1h, 24h, 7d, and 30d windows. Output to Parquet.</div>
+                <span class="feature-tag done">✓ Complete</span>
             </div>
             <div class="feature-card">
                 <div class="feature-number">04</div>
-                <div class="feature-title">Feature Engineering</div>
-                <div class="feature-description">
-                    Advanced feature extraction including with Apache Spark.
-                </div>
+                <div class="feature-title">ML Models</div>
+                <div class="feature-description">XGBoost (AUCPR metric, scale_pos_weight or SMOTE) and Random Forest (class_weight or SMOTE) classifiers implemented. Custom FraudNet in PyTorch under active development alongside dataset classes for both frameworks.</div>
+                <span class="feature-tag wip">⚙ In Progress</span>
             </div>
             <div class="feature-card">
                 <div class="feature-number">05</div>
-                <div class="feature-title">Monitoring</div>
-                <div class="feature-description">
-                    Real-time monitoring of model performance and fraud detection metrics.
-                    Currently under development.
-                </div>
+                <div class="feature-title">Kafka Streaming</div>
+                <div class="feature-description">Real-time transaction ingestion via Apache Kafka, enabling low-latency data flow between the generation layer and the Spark feature engineering job. Infrastructure scaffolded, integration pending.</div>
+                <span class="feature-tag planned">↗ Planned</span>
             </div>
             <div class="feature-card">
                 <div class="feature-number">06</div>
-                <div class="feature-title">Live Demo</div>
-                <div class="feature-description">
-                    Available Soon.
-                </div>
+                <div class="feature-title">Triton Inference</div>
+                <div class="feature-description">Models will be exported to ONNX format and served via NVIDIA Triton inference server, enabling versioned, low-latency, production-grade real-time fraud scoring.</div>
+                <span class="feature-tag planned">↗ Planned</span>
             </div>
         </div>
     </section>
 
-    <!-- Technical Deep Dive -->
+    <!-- Technical Implementation -->
     <section class="content-section">
         <h2 class="section-title">Technical Implementation</h2>
         <p class="section-description">
-            Core transaction pattern generation logic that simulates both normal and fraudulent transaction behaviors.
-            The system generates realistic patterns with timing, amounts, and payment methods tailored to each scenario.
-            Below is the core logic of the developed TransactionGenerator class, for full code and documentation, visit
-            my GitHub page.
+            Core transaction pattern generation logic — the heart of the training data pipeline. Each pattern is anchored to a
+            <code style="background:var(--grey-100);padding:2px 6px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:0.85em;">TransactionContext</code>
+            dataclass carrying all static fields, with dynamic fields filled during generation.
+            For full source, visit GitHub.
         </p>
 
         <div class="code-container">
             <div class="code-header">
-                <div class="code-dot"></div>
-                <div class="code-dot"></div>
-                <div class="code-dot"></div>
-                <div class="code-title">transaction_generator.py</div>
+                <div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div>
+                <div class="code-title">src/TransactionGenerator.py</div>
             </div>
-            <pre><code><span class="code-keyword">import</span> random
+            <pre><code><span class="code-keyword">from</span> dataclasses <span class="code-keyword">import</span> dataclass
+<span class="code-keyword">import</span> random
 <span class="code-keyword">from</span> datetime <span class="code-keyword">import</span> datetime, timedelta
-<span class="code-keyword">from</span> dataclasses <span class="code-keyword">import</span> dataclass
 
-<span class="code-comment"># Transaction context holds all metadata for a transaction pattern</span>
 <span class="code-keyword">@dataclass</span>
 <span class="code-keyword">class</span> <span class="code-function">TransactionContext</span>:
     user_id: <span class="code-keyword">int</span>
@@ -963,154 +528,195 @@
     transaction_status: <span class="code-keyword">str</span> | <span class="code-keyword">None</span>
 
 <span class="code-keyword">class</span> <span class="code-function">TransactionGenerator</span>:
-    <span class="code-keyword">def</span> <span class="code-function">__init__</span>(self, conversion_rates, fraud_rate=<span class="code-string">0.01</span>):
-        self.conversion_rates = conversion_rates
-        self.fraud_rate = fraud_rate
 
-    <span class="code-keyword">def</span> <span class="code-function">generate_transaction_pattern</span>(self, user_id, device_id, merchant_id):
-        <span class="code-comment"># Determine if transaction is fraudulent based on fraud_rate</span>
-        is_fraud, fraud_type = self._generate_transaction_type()
+    <span class="code-comment"># ── Card Probing: many small, mostly-declined hits ──────────────</span>
+    <span class="code-keyword">def</span> <span class="code-function">_card_probing_pattern</span>(self, context):
+        <span class="code-comment"># 3–15 transactions, 30–90s apart, 10% approval rate</span>
+        pattern = []
+        ts = datetime.now()
+        <span class="code-keyword">for</span> _ <span class="code-keyword">in</span> range(random.randint(<span class="code-string">3</span>, <span class="code-string">15</span>)):
+            context.transaction_status = <span class="code-string">'approved'</span> <span class="code-keyword">if</span> random.random() &lt; <span class="code-string">0.10</span> <span class="code-keyword">else</span> <span class="code-string">'declined'</span>
+            ts += timedelta(seconds=random.uniform(<span class="code-string">30</span>, <span class="code-string">90</span>))
+            pattern.append(self._build_transaction(context, self._small_amount(), ts))
+        <span class="code-keyword">return</span> pattern
 
-        <span class="code-comment"># Create transaction context with metadata</span>
-        context = self._generate_transaction_context(
-            fraud_type, user_id, device_id, merchant_id
-        )
+    <span class="code-comment"># ── Botting: rapid repeat purchases, same payment method ────────</span>
+    <span class="code-keyword">def</span> <span class="code-function">_botting_pattern</span>(self, context):
+        <span class="code-comment"># 1–10 transactions, 0.5–1s apart, 90% approval rate</span>
+        pattern = []
+        ts = datetime.now()
+        <span class="code-keyword">for</span> _ <span class="code-keyword">in</span> range(random.randint(<span class="code-string">1</span>, <span class="code-string">10</span>)):
+            context.transaction_status = <span class="code-string">'approved'</span> <span class="code-keyword">if</span> random.random() &lt; <span class="code-string">0.90</span> <span class="code-keyword">else</span> <span class="code-string">'declined'</span>
+            ts += timedelta(seconds=random.uniform(<span class="code-string">0.5</span>, <span class="code-string">1.0</span>))
+            pattern.append(self._build_transaction(context, self._generate_amount(), ts))
+        <span class="code-keyword">return</span> pattern
 
-        <span class="code-keyword">if</span> fraud_type == <span class="code-string">"Card Probing"</span>:
-            <span class="code-comment"># Generate multiple small transactions with different cards</span>
-            pattern = []
-            timestamp = datetime.now()
+    <span class="code-comment"># ── Normal: 1–3 organic purchases with natural timing ───────────</span>
+    <span class="code-keyword">def</span> <span class="code-function">_normal_pattern</span>(self, context):
+        pattern = []
+        ts = datetime.now()
+        <span class="code-keyword">for</span> _ <span class="code-keyword">in</span> range(random.randint(<span class="code-string">1</span>, <span class="code-string">3</span>)):
+            context.transaction_status = self._determine_status(is_fraud=<span class="code-keyword">False</span>)
+            ts += timedelta(seconds=random.uniform(<span class="code-string">300</span>, <span class="code-string">86400</span>))
+            pattern.append(self._build_transaction(context, self._generate_amount_by_distribution(), ts))
+        <span class="code-keyword">return</span> pattern</code></pre>
+        </div>
 
-            <span class="code-keyword">for</span> _ <span class="code-keyword">in</span> range(random.randint(<span class="code-string">5</span>, <span class="code-string">15</span>)):
-                <span class="code-comment"># Create new payment method for each attempt</span>
-                context.payment_id = self._create_payment_method(user_id)
+        <!-- Fraud Patterns Table -->
+        <h3 style="font-size:1.4rem;font-weight:700;margin-top:60px;margin-bottom:8px;letter-spacing:-0.02em;">Implemented Fraud Patterns</h3>
+        <p style="color:var(--grey-600);margin-bottom:0;">Two patterns complete; three more planned to cover a broader adversarial surface.</p>
+        <div class="fraud-table-wrapper">
+            <table class="fraud-table">
+                <thead>
+                    <tr>
+                        <th>Pattern</th>
+                        <th>Description</th>
+                        <th>Transactions</th>
+                        <th>Interval</th>
+                        <th>Approval Rate</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Card Probing</td>
+                        <td>Many new cards tested with small amounts, mostly declined</td>
+                        <td>3 – 15</td>
+                        <td>30 – 90s</td>
+                        <td>10%</td>
+                        <td><span class="pill done">✓ Complete</span></td>
+                    </tr>
+                    <tr>
+                        <td>Botting</td>
+                        <td>Rapid repeat purchases with the same payment method</td>
+                        <td>1 – 10</td>
+                        <td>0.5 – 1s</td>
+                        <td>90%</td>
+                        <td><span class="pill done">✓ Complete</span></td>
+                    </tr>
+                    <tr>
+                        <td>Card Cracking</td>
+                        <td>Systematic testing of card credentials across amounts</td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td><span class="pill planned">↗ Planned</span></td>
+                    </tr>
+                    <tr>
+                        <td>Account Takeover</td>
+                        <td>Sudden spike after inactivity; new location and payment method</td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td><span class="pill planned">↗ Planned</span></td>
+                    </tr>
+                    <tr>
+                        <td>Merchant Switching</td>
+                        <td>Payment method suddenly used across unusual merchant categories</td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td><span class="pill planned">↗ Planned</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
 
-                <span class="code-comment"># Small amounts to check card validity, most attempts declined</span>
-                amount = random.uniform(<span class="code-string">1</span>, <span class="code-string">10</span>)
-                context.transaction_status = self._determine_status(
-                    is_fraud=<span class="code-keyword">True</span>, fraud_type=fraud_type
-                )
-
-                <span class="code-comment"># Quick succession (30-90 seconds apart)</span>
-                timestamp += timedelta(seconds=random.uniform(<span class="code-string">30</span>, <span class="code-string">90</span>))
-
-                pattern.append(self._build_transaction(context, amount, timestamp))
-
-            <span class="code-keyword">return</span> pattern
-
-        <span class="code-keyword">elif</span> fraud_type == <span class="code-string">"Botting"</span>:
-            <span class="code-comment"># Rapid repeated purchases with same payment method</span>
-            pattern = []
-            timestamp = datetime.now()
-            context.payment_id = self._get_active_payment_method(user_id)
-            amount = random.uniform(<span class="code-string">10</span>, <span class="code-string">100</span>)
-
-            <span class="code-keyword">for</span> _ <span class="code-keyword">in</span> range(random.randint(<span class="code-string">10</span>, <span class="code-string">50</span>)):
-                <span class="code-comment"># Very fast (0.5-1 second intervals)</span>
-                timestamp += timedelta(seconds=random.uniform(<span class="code-string">0.5</span>, <span class="code-string">1</span>))
-                context.transaction_status = self._determine_status(
-                    is_fraud=<span class="code-keyword">True</span>, fraud_type=fraud_type
-                )
-
-                pattern.append(self._build_transaction(context, amount, timestamp))
-
-            <span class="code-keyword">return</span> pattern
-
-        <span class="code-keyword">else</span>:
-            <span class="code-comment"># Normal transaction: 1-3 successful purchases over time</span>
-            pattern = []
-            timestamp = datetime.now()
-
-            <span class="code-keyword">for</span> _ <span class="code-keyword">in</span> range(random.randint(<span class="code-string">1</span>, <span class="code-string">3</span>)):
-                amount = self._generate_amount_by_distribution()
-                context.transaction_status = self._determine_status(is_fraud=<span class="code-keyword">False</span>)
-
-                <span class="code-comment"># Natural spacing between purchases</span>
-                timestamp += timedelta(seconds=random.uniform(<span class="code-string">300</span>, <span class="code-string">86400</span>))
-
-                pattern.append(self._build_transaction(context, amount, timestamp))
-
-            <span class="code-keyword">return</span> pattern</code></pre>
+    <!-- Feature Engineering -->
+    <section class="content-section" style="background: var(--grey-50); border-top: 1px solid var(--grey-200); border-bottom: 1px solid var(--grey-200);">
+        <h2 class="section-title">Spark Feature Engineering</h2>
+        <p class="section-description">
+            All features are computed using PySpark window functions and written to Parquet via
+            <code style="background:var(--grey-200);padding:2px 6px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:0.85em;">spark/jobs/feature_engineering_job.py</code>.
+            Features are designed to directly target the behavioural signatures of each fraud pattern.
+        </p>
+        <div class="feat-table-wrapper">
+            <table class="feat-table">
+                <thead>
+                    <tr><th>Group</th><th>Key Features</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Velocity</td>
+                        <td>
+                            <span class="feat-mono">user_transaction_count_1h</span>
+                            <span class="feat-mono">user_decline_rate_1h</span>
+                            <span class="feat-mono">user_unique_payment_methods_1h</span>
+                            <span class="feat-mono">user_transaction_count_5min</span>
+                            <span class="feat-mono">device_transaction_count_5min</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Amount</td>
+                        <td>
+                            <span class="feat-mono">user_avg_amount_24h</span>
+                            <span class="feat-mono">user_stddev_amount_24h</span>
+                            <span class="feat-mono">user_amount_ratio_24h</span>
+                            <span class="feat-mono">user_avg_amount_7d</span>
+                            <span class="feat-mono">user_amount_ratio_7d</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Behavioural</td>
+                        <td>
+                            <span class="feat-mono">seconds_since_last_transaction</span>
+                            <span class="feat-mono">user_unique_merchants_24h</span>
+                            <span class="feat-mono">user_unique_countries_24h</span>
+                            <span class="feat-mono">is_new_merchant_category</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Device / Payment</td>
+                        <td>
+                            <span class="feat-mono">device_unique_users_24h</span>
+                            <span class="feat-mono">device_unique_payment_methods_24h</span>
+                            <span class="feat-mono">payment_method_age_days</span>
+                            <span class="feat-mono">is_new_payment_method</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </section>
 
     <!-- Challenges -->
-    <section class="content-section" style="background: var(--grey-50);">
+    <section class="content-section">
         <h2 class="section-title">Challenges & Solutions</h2>
         <p class="section-description">
-            Building a production-grade fraud detection system presented several complex challenges that required
-            innovative solutions.
+            Building a production-grade fraud detection system from the ground up raised several non-trivial engineering problems.
         </p>
-
         <div class="challenge-list">
             <div class="challenge-item">
-                <div class="challenge-title">
-                    <div class="challenge-icon"></div>
-                    Synthetic Fraud Patterns
-                </div>
+                <div class="challenge-title"><div class="challenge-icon"></div>Imbalanced Datasets</div>
                 <div class="challenge-description">
-                  A good training dataset has lots of variability. Fraudulent transactions only make up a small percent
-                  of actual transactions, thus leading to imbalanced datasets. Furthermore, fraudulent transactions come
-                  in a variety of patterns which can be difficult to accurately model.
+                    Fraud represents a small fraction of real-world transactions, causing models to bias toward the majority class.
+                    Both XGBoost (<code>scale_pos_weight</code>) and Random Forest (<code>class_weight="balanced"</code>) support
+                    direct weighting, and SMOTE oversampling is available as an alternative for either model.
                 </div>
             </div>
             <div class="challenge-item">
-                <div class="challenge-title">
-                    <div class="challenge-icon"></div>
-                    Real-Time Latency Requirements
-                </div>
+                <div class="challenge-title"><div class="challenge-icon"></div>Realistic Fraud Pattern Diversity</div>
                 <div class="challenge-description">
-                    Low latency requirement for real-time fraud detection. <br>
-                    [Challenge currently being handled]
+                    Fraudulent transactions span wildly different behavioural signatures — rapid micro-transactions in Card Probing
+                    versus slow account takeovers. Each pattern requires its own timing distributions, amount clusters, and approval
+                    logic to be useful as training signal, rather than noise.
                 </div>
             </div>
             <div class="challenge-item">
-                <div class="challenge-title">
-                    <div class="challenge-icon"></div>
-                    Scalable Data Pipeline
-                </div>
+                <div class="challenge-title"><div class="challenge-icon"></div>Real-Time Latency Requirements</div>
                 <div class="challenge-description">
-                    Processing millions of transactions daily requires robust infrastructure. To simulate this data
-                    volume, I implemented Kafka for streaming and Spark for distributed processing.
+                    Fraud scoring must complete within the transaction approval window. This drove the choice of ONNX export
+                    and NVIDIA Triton, which provides model versioning, batching, and sub-millisecond inference — currently
+                    planned once model training stabilises.
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Impact & Results -->
-    <section class="content-section">
-        <h2 class="section-title">Impact & Results</h2>
-        <p class="section-description">
-            The results of the fraud detection pipeline will be presented here once the project is finished.
-        </p>
-
-        <div class="impact-grid">
-            <div class="impact-card">
-                <div class="impact-number">XYZ%</div>
-                <div class="impact-label">Precision</div>
-                <div class="impact-description">
-                    Placeholder
-                </div>
-            </div>
-            <div class="impact-card">
-                <div class="impact-number">XYZ%</div>
-                <div class="impact-label">Recall</div>
-                <div class="impact-description">
-                    Placeholder
-                </div>
-            </div>
-            <div class="impact-card">
-                <div class="impact-number">XYZ</div>
-                <div class="impact-label">Latency</div>
-                <div class="impact-description">
-                    Placeholder
-                </div>
-            </div>
-            <div class="impact-card">
-                <div class="impact-number">XYZ</div>
-                <div class="impact-label">TPS</div>
-                <div class="impact-description">
-                    Placeholder
+            <div class="challenge-item">
+                <div class="challenge-title"><div class="challenge-icon"></div>Scalable Feature Engineering</div>
+                <div class="challenge-description">
+                    Computing windowed aggregates (e.g. decline rate in the last hour, unique merchants in 24h) across millions
+                    of transactions demands distributed processing. Apache Spark handles this via PySpark window functions,
+                    with a Spark Master + Worker cluster defined in <code>docker-compose.yml</code>.
                 </div>
             </div>
         </div>
@@ -1119,10 +725,6 @@
     <!-- Footer CTA -->
     <section class="footer-cta">
         <h2 class="cta-title">Check the current state of this project on Github!</h2>
-<!--        <p class="cta-description">-->
-<!--            I'd be happy to discuss this project in detail or explore how similar solutions-->
-<!--            could benefit your organization.-->
-<!--        </p>-->
         <div class="cta-buttons">
             <a href="https://github.com/LewisSchmidtke/end-to-endFraudDetection" target="_blank" class="btn btn-primary">Github Repo</a>
             <a href="index.html" class="btn btn-secondary">View More Projects</a>
@@ -1130,61 +732,27 @@
     </section>
 
     <script>
-        // View Button - Hold to reveal architecture diagram
-        const viewButton = document.getElementById('viewButton');
-        const archBackground = document.getElementById('archBackground');
-        const archFlow = document.getElementById('archFlow');
+        const viewButton   = document.getElementById('viewButton');
+        const toggleSwitch = document.getElementById('toggleSwitch');
+        const toggleLabel  = document.getElementById('toggleLabel');
+        const archBg       = document.getElementById('archBackground');
+        const archFlow     = document.getElementById('archFlow');
+        let isRevealed = false;
 
-        let isPressed = false;
-
-        // Mouse events
-        viewButton.addEventListener('mousedown', () => {
-            isPressed = true;
-            revealDiagram();
-        });
-
-        viewButton.addEventListener('mouseup', () => {
-            isPressed = false;
-            hideDiagram();
-        });
-
-        viewButton.addEventListener('mouseleave', () => {
-            if (isPressed) {
-                isPressed = false;
-                hideDiagram();
+        viewButton.addEventListener('click', () => {
+            isRevealed = !isRevealed;
+            if (isRevealed) {
+                toggleSwitch.classList.add('active');
+                toggleLabel.textContent = 'Hide Architecture';
+                archBg.classList.add('revealed');
+                archFlow.classList.add('hidden');
+            } else {
+                toggleSwitch.classList.remove('active');
+                toggleLabel.textContent = 'View Architecture';
+                archBg.classList.remove('revealed');
+                archFlow.classList.remove('hidden');
             }
         });
-
-        // Touch events
-        viewButton.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            isPressed = true;
-            revealDiagram();
-        });
-
-        viewButton.addEventListener('touchend', (e) => {
-            e.preventDefault();
-            isPressed = false;
-            hideDiagram();
-        });
-
-        viewButton.addEventListener('touchcancel', (e) => {
-            e.preventDefault();
-            isPressed = false;
-            hideDiagram();
-        });
-
-        function revealDiagram() {
-            archBackground.classList.add('revealed');
-            archFlow.classList.add('hidden');
-            viewButton.textContent = 'Release to Hide';
-        }
-
-        function hideDiagram() {
-            archBackground.classList.remove('revealed');
-            archFlow.classList.remove('hidden');
-            viewButton.textContent = 'Hold to View';
-        }
     </script>
 </body>
 </html>
