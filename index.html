@@ -16,7 +16,6 @@
             --black: #000000;
             --white: #ffffff;
             --green: #00E842;
-            --construction-yellow: #FFD700;
             --grey-100: #f5f5f5;
             --grey-200: #e5e5e5;
             --grey-300: #d4d4d4;
@@ -100,105 +99,6 @@
 
         .nav-links a:hover::after {
             width: 100%;
-        }
-
-        /* ============================================
-           CONSTRUCTION BANNER
-           ============================================ */
-
-        .construction-banner {
-            position: fixed;
-
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 20vh;
-            z-index: 9999;
-            pointer-events: none;
-            transform: translateX(-100%);
-            transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        }
-
-        .construction-banner.visible {
-            transform: translateX(0);
-            pointer-events: auto;
-        }
-
-        .construction-content {
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(
-                45deg,
-                var(--construction-yellow),
-                var(--construction-yellow) 40px,
-                var(--black) 40px,
-                var(--black) 80px
-            );
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .construction-content::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.1);
-            pointer-events: none;
-        }
-
-        .construction-text-container {
-            text-align: center;
-            z-index: 1;
-            background: var(--black);
-            padding: clamp(20px, 2.34vw, 60px) clamp(30px, 3.13vw, 80px);
-            border-radius: clamp(12px, 0.78vw, 20px);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-            border: 4px solid var(--construction-yellow);
-        }
-
-        .construction-title {
-            font-size: clamp(1.5rem, 2.5vw, 4rem);
-            font-weight: 800;
-            color: var(--construction-yellow);
-            letter-spacing: -0.02em;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3);
-        }
-
-        .construction-subtitle {
-            font-size: clamp(0.8rem, 0.75vw, 1.2rem);
-            font-weight: 500;
-            color: var(--white);
-            margin-bottom: 30px;
-            letter-spacing: 0.05em;
-        }
-
-        .construction-dismiss {
-            font-size: clamp(0.65rem, 0.56vw, 0.9rem);
-            font-weight: 600;
-            color: var(--construction-yellow);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            padding: 12px 32px;
-            border: 2px solid var(--construction-yellow);
-            border-radius: 50px;
-            background: transparent;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .construction-dismiss:hover {
-            background: var(--construction-yellow);
-            color: var(--black);
-            transform: scale(1.05);
         }
 
         /* ============================================
@@ -1570,31 +1470,6 @@
                 font-size: 1.2rem;
             }
 
-            /* Construction banner */
-            .construction-banner {
-                height: 25vh;
-            }
-
-            .construction-text-container {
-                padding: 16px 20px;
-                border-radius: 12px;
-            }
-
-            .construction-title {
-                font-size: 1.2rem;
-                margin-bottom: 8px;
-            }
-
-            .construction-subtitle {
-                font-size: 0.7rem;
-                margin-bottom: 12px;
-            }
-
-            .construction-dismiss {
-                font-size: 0.6rem;
-                padding: 8px 16px;
-            }
-
             /* Contact dropup */
             .contact-dropup {
                 bottom: 3.5rem;
@@ -1720,18 +1595,6 @@
     </style>
 </head>
 <body>
-
-    <!-- Construction Banner -->
-    <div class="construction-banner" id="constructionBanner">
-        <div class="construction-content" id="constructionContent">
-            <div class="construction-text-container">
-                <div class="construction-title">Project under active Development</div>
-                <div class="construction-subtitle">This project is an active development stage! Check my GitHub for updates</div>
-                <button class="construction-dismiss">Click to Dismiss</button>
-            </div>
-        </div>
-    </div>
-
     <nav>
         <div class="nav-inner">
             <div class="logo" id="logoBtn" style="cursor:pointer;">Lewis M. Schmitke</div>

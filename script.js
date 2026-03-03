@@ -292,10 +292,6 @@
             targetRotation += ROTATION_PER_SNAP * direction;
             animateRotation(currentRotation, targetRotation);
 
-            currentProject = projectIndex;
-             if (projectIndex === 0) {
-                setTimeout(() => showConstructionBanner(), 100);
-            }
         }
 
         function handleNavigation(direction) {
@@ -308,9 +304,6 @@
                     // Go to projects
                     goToVerticalPage(1);
                     sectionIndicator.classList.add('visible');
-
-                    // Show construction banner when entering project page
-                    showConstructionBanner();
                 }
                 // Can't go up from hero
             }
@@ -328,9 +321,6 @@
                     // Try to go to previous project
                     if (currentProject > 0) {
                         goToProject(currentProject - 1, direction);
-                        if (currentProject - 1 === 0) {
-                            setTimeout(() => showConstructionBanner(), 100);
-                        }
                     } else {
                         // First project, go to hero
                         goToVerticalPage(0);
@@ -348,9 +338,6 @@
                     currentProject = totalProjects - 1;
                     updateProjectPosition(currentProject);
                     updateIndicators(currentProject);
-                    if (currentProject === 0) {
-                        setTimeout(() => showConstructionBanner(), 100);
-                    }
                 }
             }
             // Currently on footer page
@@ -448,39 +435,6 @@
 
         // Initialize
         updateOverlayClipPath(0);
-
-        // ============================================
-        // Construction Banner Logic
-        // ============================================
-        const constructionBanner = document.getElementById('constructionBanner');
-        const constructionContent = document.getElementById('constructionContent');
-
-        function showConstructionBanner() {
-            if (currentProject !== 0) return;
-
-            // Wait a bit for page transition, then show banner
-            setTimeout(() => {
-                if (currentVerticalPage === 1 && currentProject === 0) {
-                    constructionBanner.classList.add('visible');
-                }
-            }, 800);
-        }
-
-        function hideConstructionBanner() {
-            constructionBanner.classList.remove('visible');
-        }
-
-        // Click anywhere on construction banner to dismiss
-        constructionContent.addEventListener('click', (e) => {
-            hideConstructionBanner();
-        });
-
-        // Also dismiss on escape key when banner is visible
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && constructionBanner.classList.contains('visible')) {
-                hideConstructionBanner();
-            }
-        });
 
         // ============================================
         // Expanding Tech Stack Assembly Chain Animation
@@ -581,11 +535,6 @@
                 currentProject = 0;
                 updateProjectPosition(0);
                 updateIndicators(0);
-
-                // Show construction banner when jumping to first project
-                setTimeout(() => {
-                    showConstructionBanner();
-                }, 800);
             }
 
             goToVerticalPage(page);
