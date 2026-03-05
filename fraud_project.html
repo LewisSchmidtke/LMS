@@ -378,7 +378,7 @@
                     <div class="flow-number">3</div>
                     <div class="flow-title">Kafka Streaming</div>
                     <div class="flow-description">Apache Kafka for real-time transaction ingestion, enabling low-latency streaming between the data layer and feature engineering.</div>
-                    <span class="flow-status planned">↗ Planned</span>
+                    <span class="flow-status done">✓ Complete</span>
                 </div>
                 <div class="flow-item">
                     <div class="flow-number">4</div>
@@ -390,13 +390,13 @@
                     <div class="flow-number">5</div>
                     <div class="flow-title">ML Model Training</div>
                     <div class="flow-description">XGBoost and Random Forest classifiers available, both with SMOTE or class-weight imbalance handling. Custom FraudNet in PyTorch under active development.</div>
-                    <span class="flow-status wip">⚙ In Progress</span>
+                    <span class="flow-status done">✓ Complete</span>
                 </div>
                 <div class="flow-item">
                     <div class="flow-number">6</div>
                     <div class="flow-title">Triton Inference</div>
                     <div class="flow-description">ONNX export plus NVIDIA Triton server for production-grade real-time inference with low latency and model versioning.</div>
-                    <span class="flow-status planned">↗ Planned</span>
+                    <span class="flow-status wip">⚙ In Progress</span>
                 </div>
             </div>
         </div>
@@ -418,12 +418,10 @@
                     <tr><td>Botting fraud pattern</td><td><span class="pill done">✓ Complete</span></td></tr>
                     <tr><td>Spark feature engineering</td><td><span class="pill done">✓ Complete</span></td></tr>
                     <tr><td>PyTorch custom model (FraudNet)</td><td><span class="pill done">✓ Complete</span></td></tr>
-                    <tr><td>Model training</td><td><span class="pill wip">⚙ In Progress</span></td></tr>
-                    <tr><td>Kafka data streaming</td><td><span class="pill planned">⚙ In Progress</span></td></tr>
-                    <tr><td>ONNX export &amp; Triton inference</td><td><span class="pill planned">⚙ In Progress</span></td></tr>
-                    <tr><td>Card Cracking fraud pattern</td><td><span class="pill planned">↗ Planned</span></td></tr>
-                    <tr><td>Account Takeover fraud pattern</td><td><span class="pill planned">↗ Planned</span></td></tr>
-                    <tr><td>Merchant Switching fraud pattern</td><td><span class="pill planned">↗ Planned</span></td></tr>
+                    <tr><td>Model training</td><td><span class="pill done">✓ Complete</span></td></tr>
+                    <tr><td>Kafka data streaming</td><td><span class="pill done">✓ Complete</span></td></tr>
+                    <tr><td>ONNX export &amp; Triton inference</td><td><span class="pill wip">⚙ In Progress</span></td></tr>
+                    <tr><td>Additional fraud patterns</td><td><span class="pill planned">↗ Planned</span></td></tr>
                 </tbody>
             </table>
         </div>
@@ -468,7 +466,7 @@
                 <div class="feature-number">02</div>
                 <div class="feature-title">Fraud Pattern Engine</div>
                 <div class="feature-description">Card Probing (3–15 small, mostly-declined transactions, 30–90s intervals, 10% approval) and Botting (1–10 rapid repeats, 0.5–1s intervals, 90% approval) are fully implemented. Card Cracking, Account Takeover and Merchant Switching are planned.</div>
-                <span class="feature-tag done">✓ 2/5 Patterns</span>
+                <span class="feature-tag done">✓ 2 Patterns</span>
             </div>
             <div class="feature-card">
                 <div class="feature-number">03</div>
@@ -480,19 +478,19 @@
                 <div class="feature-number">04</div>
                 <div class="feature-title">ML Models</div>
                 <div class="feature-description">XGBoost (AUCPR metric, scale_pos_weight or SMOTE) and Random Forest (class_weight or SMOTE) classifiers implemented. Custom FraudNet in PyTorch under active development alongside dataset classes for both frameworks.</div>
-                <span class="feature-tag wip">⚙ In Progress</span>
+                <span class="feature-tag done">✓ Complete</span>
             </div>
             <div class="feature-card">
                 <div class="feature-number">05</div>
                 <div class="feature-title">Kafka Streaming</div>
                 <div class="feature-description">Real-time transaction ingestion via Apache Kafka, enabling low-latency data flow between the generation layer and the Spark feature engineering job. Infrastructure scaffolded, integration pending.</div>
-                <span class="feature-tag planned">↗ Planned</span>
+                <span class="feature-tag done">✓ Complete</span>
             </div>
             <div class="feature-card">
                 <div class="feature-number">06</div>
                 <div class="feature-title">Triton Inference</div>
                 <div class="feature-description">Models will be exported to ONNX format and served via NVIDIA Triton inference server, enabling versioned, low-latency, production-grade real-time fraud scoring.</div>
-                <span class="feature-tag planned">↗ Planned</span>
+                <span class="feature-tag wip">⚙ In Progress</span>
             </div>
         </div>
     </section>
