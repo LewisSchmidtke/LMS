@@ -586,27 +586,29 @@
 
         // UPDATED: Complete data with unique responsibilities and technologies for each experience
         const industryData = [
-            {
-                image: 'images/company_logos/bmw_motorsport.png',
-                date: '10.2025 - Present',
-                title: 'Data/Performance Engineer Intern',
-                company: 'BMW M Motorsport',
-                description: 'Built a data analysis pipeline that transforms more than 1 million datapoints of competitor race data into derived performance and strategy indicators, used directly by chief engineers during race and preparation sessions.',
-                responsibilities: [
-                    'Developed automated competitor analysis pipeline processing 1M+ data points per session',
-                    'Redevelopment of an energy management tool, with physical modeling and sweeping for in-car deployment',
-                    'Collaborated with race engineers to define KPIs and visualization requirements'
-                ],
-                technologies: ['Python', 'Pandas', 'NumPy', 'Seaborn']
-            },
+            // {
+            //     image: 'images/company_logos/bmw_motorsport.png',
+            //     date: '10.2025 - Present',
+            //     title: 'Data/Performance Engineer Intern',
+            //     company: 'BMW M Motorsport',
+            //     description: 'Built a data analysis pipeline that transforms more than 1 million datapoints of competitor race data into derived performance and strategy indicators, used directly by chief engineers during race and preparation sessions.',
+            //     responsibilities: [
+            //         'Developed automated competitor analysis pipeline processing 1M+ data points per session',
+            //         'Redevelopment of an energy management tool, with physical modeling and sweeping for in-car deployment',
+            //         'Collaborated with race engineers to define KPIs and visualization requirements'
+            //     ],
+            //     technologies: ['Python', 'Pandas', 'NumPy', 'Seaborn']
+            // },
             {
                 image: 'images/company_logos/bmw.png',
-                date: '05.2025 - 10.2025',
+                date: '05.2025 - Present',
                 title: 'Software Engineer Intern',
                 company: 'BMW Group',
-                description: 'Implemented a Python-based data pipeline for high-frequency measurement data, covering optimized data loading, filtering, processing and augmentation for downstream analysis and modeling.',
+                description: 'Software development for different departments.',
                 responsibilities: [
-                    'Built a GUI-based modeling tool for physical data, replacing a manual workflow and reducing per-data-point processing time from 15 minutes to 1 minute, saving more than 90%',
+                    'Delivered a 90% cost saving per file, by creating a GUI-based modeling tool for physical data that automated a previously manual workflow',
+                    'Improved the speed of a sensor data processing tool by more than 50% and improved the data quality by implementing custom signal processing filters and augmentation processes',
+                    'BMW MOTORSPORT: Built a Python script that transforms 1 million+ race datapoints into actionable performance and strategy KPIs, used directly by chief engineers during race preparation and execution',
                     'Part of special task force for time-sensitive challenges',
                     'Close collaboration with test- and simulation engineers as well as the head of the department',
                 ],
@@ -617,8 +619,9 @@
                 date: '02.2025 - 05.2025',
                 title: 'Data Scientist Working Student',
                 company: 'WZL Laboratory Aachen',
-                description: 'Analyzed machine and production data regarding hidden AI potentials in additive manufacturing environments.',
+                description: 'Analysis of AI/ML potentials in manufacturing environments',
                 responsibilities: [
+                    'Analyzed machine and production data regarding hidden AI potentials in additive manufacturing environments.',
                     'Conducted exploratory data analysis on manufacturing process data',
                     'Presented findings to partners and cross-functional teams'
                 ],
@@ -627,20 +630,20 @@
             {
                 image: 'images/company_logos/porsche.png',
                 date: '04.2024 - 10.2024',
-                title: 'MLOps Engineer Intern',
+                title: 'Machine Learning Research Intern',
                 company: 'Porsche AG',
-                description: 'Developed MLOps pipelines in MS Azure and Python (PyTorch), including tabular datasets & model versioning, distributed multi-GPU training and automated metric tracking.',
+                description: 'Head injury severeness prediction for vehicle safety via novel machine learning approaches',
                 responsibilities: [
-                    'Architected end-to-end MLOps pipeline on Azure ML platform',
-                    'Implemented custom transformer architectures regarding Tokenization, Layering and Input in PyTorch',
-                    'Created custom data representations for combined material and geometry data',
+                    'Engineered Transformer-based models for high dimensional vehicle data (1.4M features/sample), achieving the first meaningful predictive performance (R2 = 0.495) on head injury severity prediction',
+                    'Implemented ML-pipelines in MS Azure for the training and deployment of custom transformer architectures, utilizing GPU clusters and NVIDIA CUDA',
+                    'Developed custom data representations methods for combined material and geometry data',
                 ],
-                technologies: ['Python', 'PyTorch', 'MS Azure', 'Seaborn', 'Git']
+                technologies: ['Python', 'PyTorch', 'MS Azure', 'Seaborn', 'Git', 'CUDA']
             },
             {
                 image: 'images/company_logos/ika.png',
                 date: '04.2024 - 10.2024',
-                title: 'Bachelor Thesis - Grade A+',
+                title: 'Bachelor Thesis collaboration with Porsche',
                 company: 'IKA - RWTH',
                 description: 'TITLE: Data Format Research for machine learning based HIC predictions in structural vehicle Analysis.',
                 responsibilities: [
@@ -652,10 +655,11 @@
             {
                 image: 'images/company_logos/bosch.png',
                 date: '10.2023 - 03.2024',
-                title: 'ML Engineer',
+                title: 'Machine Learning Research Intern',
                 company: 'Bosch Engineering GmbH',
-                description: 'Developed autoencoder models from the ground up for time series applications, implementing unique latent space designs and baseline architectures using Python and PyTorch.',
+                description: 'Research on ML-based vehicle state predictions for non-measurable components',
                 responsibilities: [
+                    'Developed novel hierarchical autoencoder models in PyTorch for vehicle state prediction on time-series data. Outperformed the baseline model across all regression tasks.',
                     'Conducted vehicle simulations with IPGCarmaker',
                     'Conducted experiments regarding the models functionality as a foundational model and transferability across datasets.',
                     'Data analysis for time series data',
@@ -665,14 +669,14 @@
             {
                 image: 'images/company_logos/wzl.png',
                 date: '04.2023 - 09.2023',
-                title: 'Computer Vision Engineer Intern',
+                title: 'Machine Learning Research Intern (Computer Vision)',
                 company: 'Smart Automation Lab - A WZL Project',
-                description: 'Developed a custom object detection model and dataset improving the accuracy by 25%, by utilizing a different model architecture, better data augmentation techniques and a bigger dataset.',
+                description: 'Research for computer vision in collaborative robotic assembly tasks',
                 responsibilities: [
-                    'Live video stream inference with ONNX runtime',
+                    'Increased the manufacturing capabilities by improving the model accuracy from 68% to 84%, through a newer model architecture, better data augmentation and bigger dataset.',
+                    'Deployed the model with <1s detection latency via ONNX runtime in a live manufacturing environment.',
                     'Implemented YOLO-based object detection model with custom modifications in robot behavior tree system',
                     'Curated and annotated custom dataset',
-                    'Achieved 25% accuracy improvement over existing solution'
                 ],
                 technologies: ['Python', 'PyTorch', 'OpenCV', 'Git', 'ONNX', 'ROS']
             }
@@ -684,9 +688,8 @@
                 date: '10.2025 - present',
                 title: 'Fastlane Scholarship',
                 company: 'BMW Group',
-                description: "One of a handful of students who has been selected for BMW's masters scholarship.",
+                description: "Scholarship with an acceptance rate of less than 1%.",
                 responsibilities: [
-                    'Selected from 2000+ applicants for prestigious scholarship program',
                     'Monthly stipend for M.Sc. studies',
                     'Exclusive mentorship from BMW senior leaders',
                 ],
@@ -700,9 +703,9 @@
                 description: 'Specialization in Simulation Science with general degree in mechanical engineering and courses in:',
                 responsibilities: [
                     'Machine Learning',
+                    'Reinforcement Learning',
                     'Finite Element Analysis (FEA)',
                     'Automotive Engineering',
-                    'Business'
                 ],
                 technologies: ['Python', 'PyTorch', 'MATLAB', 'ANSYS']
             },
