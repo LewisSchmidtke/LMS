@@ -284,6 +284,8 @@
             if (projectIndex < 0 || projectIndex >= totalProjects) return;
             if (projectIndex === currentProject) return;
 
+            currentProject = projectIndex;
+
             // Update horizontal position
             updateProjectPosition(projectIndex);
             updateIndicators(projectIndex);
@@ -291,7 +293,6 @@
             // Animate rotation with smooth velocity curve
             targetRotation += ROTATION_PER_SNAP * direction;
             animateRotation(currentRotation, targetRotation);
-
         }
 
         function handleNavigation(direction) {
@@ -1214,7 +1215,7 @@
             isCardExpanded = true;
             activeSourceCard = card;
 
-            // Get card's current screen position
+            // Get card's current screen position (accounts for CSS transforms)
             const rect = card.getBoundingClientRect();
 
             // Pull content from the source card
@@ -1230,7 +1231,7 @@
             expandedCompany.textContent = company ? company.textContent : '';
             expandedDescription.textContent = desc ? desc.textContent : '';
 
-            // UPDATED: Populate unique responsibilities and technologies
+            // Populate unique responsibilities and technologies
             let detailsHTML = '';
 
             if (itemData.responsibilities && itemData.responsibilities.length > 0) {
@@ -1253,8 +1254,21 @@
 
             expandedDetails.innerHTML = detailsHTML;
 
-            // Position expanded card exactly over the source card
+            // Compute the target (morphed) dimensions from CSS clamp() values
+            // by temporarily rendering the card in morphing state off-screen
             expandedCard.style.transition = 'none';
+            expandedCard.style.left = '-9999px';
+            expandedCard.style.top = '-9999px';
+            expandedCard.style.width = '';
+            expandedCard.style.height = '';
+            expandedCard.style.opacity = '0';
+            expandedCard.classList.add('morphing');
+            void expandedCard.offsetHeight; // force reflow to read morphing dimensions
+            const targetW = expandedCard.offsetWidth;
+            const targetH = expandedCard.offsetHeight;
+            expandedCard.classList.remove('morphing');
+
+            // Position expanded card exactly over the source card (start of morph)
             expandedCard.style.left = rect.left + 'px';
             expandedCard.style.top = rect.top + 'px';
             expandedCard.style.width = rect.width + 'px';
@@ -1266,10 +1280,10 @@
             // Hide the source card
             card.style.opacity = '0';
 
-            // Force reflow
+            // Force reflow so the browser registers the start position before animating
             void expandedCard.offsetHeight;
 
-            // Activate overlay
+            // Activate backdrop overlay
             cardOverlay.classList.add('active');
 
             // Morph to center expanded size
@@ -1277,17 +1291,16 @@
                 expandedCard.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
                 expandedCard.classList.add('morphing');
 
-                // Center it
-                // Read target dimensions from CSS (which uses clamp())
-                const expandedEl = document.querySelector('.expanded-card');
-                expandedEl.classList.add('morphing');
-                const targetW = expandedEl.getBoundingClientRect().width;
-                const targetH = expandedEl.getBoundingClientRect().height;
-                expandedEl.classList.remove('morphing');
-                expandedCard.style.left = ((window.innerWidth - targetW) / 2) + 'px';
-                expandedCard.style.top = ((window.innerHeight - targetH) / 2) + 'px';
+                // Override the CSS width/height with explicit pixel values so the
+                // transition animates correctly (CSS class values can't be transitioned
+                // from inline overrides without explicit pixel targets)
+                const finalLeft = ((window.innerWidth - targetW) / 2);
+                const finalTop = ((window.innerHeight - targetH) / 2);
+                expandedCard.style.left = finalLeft + 'px';
+                expandedCard.style.top = finalTop + 'px';
                 expandedCard.style.width = targetW + 'px';
                 expandedCard.style.height = targetH + 'px';
+                expandedCard.style.borderRadius = '24px';
             });
         }
 
@@ -1296,28 +1309,38 @@
 
             const rect = activeSourceCard.getBoundingClientRect();
 
-            // Remove morphing state (hides details, close btn)
-            expandedCard.classList.remove('morphing');
-
-            // Morph back to source card position
-            expandedCard.style.transition = 'all 0.45s cubic-bezier(0.4, 0, 0.2, 1)';
+            // Keep .morphing on during the shrink so CSS class rules don't
+            // interfere with our inline transition. Animate size back to source card.
+            expandedCard.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
             expandedCard.style.left = rect.left + 'px';
             expandedCard.style.top = rect.top + 'px';
             expandedCard.style.width = rect.width + 'px';
             expandedCard.style.height = rect.height + 'px';
-            expandedCard.style.borderRadius = '32px';
+            expandedCard.style.borderRadius = '20px';
 
             // Fade overlay
             cardOverlay.classList.remove('active');
 
-            // After morph completes, hide expanded and show source
+            // Once shrunk to source size, fade out then restore source card
             setTimeout(() => {
+                expandedCard.style.transition = 'opacity 0.2s ease';
                 expandedCard.style.opacity = '0';
-                expandedCard.style.pointerEvents = 'none';
-                activeSourceCard.style.opacity = '1';
-                activeSourceCard = null;
-                isCardExpanded = false;
-            }, 450);
+
+                setTimeout(() => {
+                    // Safe to clean up now that it's invisible
+                    expandedCard.classList.remove('morphing');
+                    expandedCard.style.transition = '';
+                    expandedCard.style.left = '';
+                    expandedCard.style.top = '';
+                    expandedCard.style.width = '';
+                    expandedCard.style.height = '';
+                    expandedCard.style.borderRadius = '';
+                    expandedCard.style.pointerEvents = 'none';
+                    activeSourceCard.style.opacity = '1';
+                    activeSourceCard = null;
+                    isCardExpanded = false;
+                }, 200);
+            }, 400);
         }
 
         // Close button
